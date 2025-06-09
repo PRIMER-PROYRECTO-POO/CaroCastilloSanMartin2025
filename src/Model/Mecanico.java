@@ -22,6 +22,7 @@ public class Mecanico {
 
     public int getCantidad() {
         return cantidad;
+
     }
 
     public void setCantidad(int cantidad) {
