@@ -3,6 +3,7 @@ package Model;
 public class Auto {
   private int id_auto;
   private int cantidad;
+  a
 
   public Auto() {
   }
