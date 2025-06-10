@@ -40,7 +40,15 @@ public class HerramientaDAO {
         }return herramientas;
     }
     public void actualizarHerramienta(Herramienta er){
-
+        String sql = "UPDATE herramientas SET nombre=?, tipo=?, estado=? WHERE id_herramienta=?";
+        try(PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setString(1,er.getNombre());
+            stmt.setString(2,er.getTipo());
+            stmt.setString(3,er.getEstado());
+            stmt.setInt(4,er.getId_herramienta());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     public void eliminarHerramienta(int id){
 

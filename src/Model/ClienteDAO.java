@@ -40,7 +40,15 @@ public class ClienteDAO {
         }return clientitos;
     }
     public void actualizarCliente(Cliente cl){
-
+        String sql = "UPDATE clientes SET nombre=?, rut=?, telefono=? WHERE id_clientes=?";
+        try(PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setString(1,cl.getNombre());
+            stmt.setString(2,cl.getRut());
+            stmt.setString(3,cl.getTelefono());
+            stmt.setInt(4,cl.getId_clientes());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     public void eliminarCliente(int id){
 

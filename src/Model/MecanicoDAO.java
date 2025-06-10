@@ -25,7 +25,7 @@ public class MecanicoDAO {
     }
     public List<Mecanico> obtenerTodos(){
         List<Mecanico> mecanicos = new ArrayList<>();
-        String sql = "Select * FROM autos";
+        String sql = "Select * FROM mecanicos";
         try(Statement stmt = connection.createStatement()){
             ResultSet resultado = stmt.executeQuery(sql);
             while(resultado.next()) {
@@ -40,7 +40,15 @@ public class MecanicoDAO {
         }return mecanicos;
     }
     public void actualizarMecanico(Mecanico mc){
-
+        String sql = "UPDATE mecanicos SET nombre=?, especialidad=?, anio_experiencia=? WHERE id_mecanico=?";
+        try(PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setString(1,mc.getNombre());
+            stmt.setString(2,mc.getEspecialidad());
+            stmt.setInt(3,mc.getAnio_experiencia());
+            stmt.setInt(4,mc.getId_mecanico());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     public void eliminarMecanico(int id){
 

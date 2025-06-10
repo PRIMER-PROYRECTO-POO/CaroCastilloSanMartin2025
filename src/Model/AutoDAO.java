@@ -40,7 +40,16 @@ public class AutoDAO {
         }return autitos;
     }
     public void actualizarAuto(Auto car){
-
+        String sql = "UPDATE autos SET marca=?, modelo=?, anio=?, patente=? WHERE id_auto=?";
+        try(PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setString(1,car.getMarca());
+            stmt.setString(2,car.getModelo());
+            stmt.setInt(3,car.getAnio());
+            stmt.setString(4,car.getPatente());
+            stmt.setInt(5, car.getId_auto());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     public void eliminarAuto(int id){
 
