@@ -51,6 +51,12 @@ public class MecanicoDAO {
         }
     }
     public void eliminarMecanico(int id){
-
+        String sql = "DELETE FROM mecanicos WHERE id_mecanico=?";
+        try(PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setInt(1,id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

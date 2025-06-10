@@ -51,6 +51,12 @@ public class ClienteDAO {
         }
     }
     public void eliminarCliente(int id){
-
+        String sql = "DELETE FROM clientes WHERE id_clientes=?";
+        try(PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setInt(1,id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

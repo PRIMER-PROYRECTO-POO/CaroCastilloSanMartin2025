@@ -52,6 +52,12 @@ public class AutoDAO {
         }
     }
     public void eliminarAuto(int id){
-
+        String sql = "DELETE FROM autos WHERE id_auto=?";
+        try(PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setInt(1,id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

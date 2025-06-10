@@ -51,6 +51,12 @@ public class HerramientaDAO {
         }
     }
     public void eliminarHerramienta(int id){
-
+        String sql = "DELETE FROM herramientas WHERE id_herramienta=?";
+        try(PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setInt(1,id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
