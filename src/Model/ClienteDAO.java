@@ -1,9 +1,7 @@
 package Model;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClienteDAO {
@@ -25,8 +23,21 @@ public class ClienteDAO {
             e.printStackTrace();
         }
     }
-    public List<Auto> obtenerTodos(){
-
+    public List<Cliente> obtenerTodos(){
+        List<Cliente> clientitos = new ArrayList<>();
+        String sql = "Select * FROM clientes";
+        try(Statement stmt = connection.createStatement()){
+            ResultSet resultado = stmt.executeQuery(sql);
+            while(resultado.next()) {
+                clientitos.add(new Cliente(resultado.getInt("id_clientes"),
+                        resultado.getString("nombre"),
+                        resultado.getString("rut"),
+                        resultado.getString("telefono")
+                ));
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }return clientitos;
     }
     public void actualizarCliente(Cliente cl){
 

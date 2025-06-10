@@ -1,9 +1,7 @@
 package Model;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MecanicoDAO {
@@ -25,8 +23,21 @@ public class MecanicoDAO {
             e.printStackTrace();
         }
     }
-    public List<Auto> obtenerTodos(){
-
+    public List<Mecanico> obtenerTodos(){
+        List<Mecanico> mecanicos = new ArrayList<>();
+        String sql = "Select * FROM autos";
+        try(Statement stmt = connection.createStatement()){
+            ResultSet resultado = stmt.executeQuery(sql);
+            while(resultado.next()) {
+                mecanicos.add(new Mecanico(resultado.getInt("id_mecanico"),
+                        resultado.getString("nombre"),
+                        resultado.getString("especialidad"),
+                        resultado.getInt("anio_experiencia")
+                ));
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }return mecanicos;
     }
     public void actualizarMecanico(Mecanico mc){
 

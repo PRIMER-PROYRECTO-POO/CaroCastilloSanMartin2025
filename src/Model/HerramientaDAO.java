@@ -1,9 +1,7 @@
 package Model;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HerramientaDAO {
@@ -25,8 +23,21 @@ public class HerramientaDAO {
             e.printStackTrace();
         }
     }
-    public List<Auto> obtenerTodos(){
-
+    public List<Herramienta> obtenerTodos(){
+        List<Herramienta> herramientas = new ArrayList<>();
+        String sql = "Select * FROM herramientas";
+        try(Statement stmt = connection.createStatement()){
+            ResultSet resultado = stmt.executeQuery(sql);
+            while(resultado.next()) {
+                herramientas.add(new Herramienta(resultado.getInt("id_herramienta"),
+                        resultado.getString("nombre"),
+                        resultado.getString("tipo"),
+                        resultado.getString("estado")
+                ));
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }return herramientas;
     }
     public void actualizarHerramienta(Herramienta er){
 

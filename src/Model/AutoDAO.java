@@ -23,7 +23,21 @@ public class AutoDAO {
         }
     }
     public List<Auto> obtenerTodos(){
-
+        List<Auto> autitos = new ArrayList<>();
+        String sql = "Select * FROM autos";
+        try(Statement stmt = connection.createStatement()){
+            ResultSet resultado = stmt.executeQuery(sql);
+            while(resultado.next()) {
+                autitos.add(new Auto(resultado.getInt("id_auto"),
+                        resultado.getString("marca"),
+                        resultado.getString("modelo"),
+                        resultado.getInt("anio"),
+                        resultado.getString("patente")
+                ));
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }return autitos;
     }
     public void actualizarAuto(Auto car){
 
