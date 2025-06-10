@@ -7,7 +7,7 @@ import java.util.List;
 
 public class HerramientaDAO {
     private Connection connection;
-    public AutoDAO(){
+    public HerramientaDAO(){
         try{
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/taller_mecanico","root","");
         }catch(SQLException e){
