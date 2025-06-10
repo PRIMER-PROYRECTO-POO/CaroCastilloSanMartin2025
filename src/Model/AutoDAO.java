@@ -12,7 +12,15 @@ public class AutoDAO {
         }
     }
     public void crearAuto(Auto car){
-
+        String sql = "INSERT INTO autos (marca,modelo,anio,patente) values (?,?,?,?)";
+        try(PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setString(1,car.getMarca());
+            stmt.setString(2,car.getModelo());
+            stmt.setInt(3,car.getAnio());
+            stmt.setString(4,car.getPatente());
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
     }
     public List<Auto> obtenerTodos(){
 
