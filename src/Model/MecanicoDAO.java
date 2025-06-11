@@ -18,6 +18,8 @@ public class MecanicoDAO {
             stmt.setString(1,mc.getNombre());
             stmt.setString(2,mc.getEspecialidad());
             stmt.setInt(3,mc.getAnio_experiencia());
+            stmt.executeUpdate();
+
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -45,6 +47,8 @@ public class MecanicoDAO {
             stmt.setString(2,mc.getEspecialidad());
             stmt.setInt(3,mc.getAnio_experiencia());
             stmt.setInt(4,mc.getId_mecanico());
+            stmt.executeUpdate();
+
         } catch (Exception e) {
             e.printStackTrace();
         }

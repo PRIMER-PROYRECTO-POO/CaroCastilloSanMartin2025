@@ -18,6 +18,8 @@ public class AutoDAO {
             stmt.setString(2,car.getModelo());
             stmt.setInt(3,car.getAnio());
             stmt.setString(4,car.getPatente());
+            stmt.executeUpdate();
+
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -47,6 +49,8 @@ public class AutoDAO {
             stmt.setInt(3,car.getAnio());
             stmt.setString(4,car.getPatente());
             stmt.setInt(5, car.getId_auto());
+            stmt.executeUpdate();
+
         } catch (Exception e) {
             e.printStackTrace();
         }

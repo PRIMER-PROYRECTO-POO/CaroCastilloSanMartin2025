@@ -18,6 +18,7 @@ public class ClienteDAO {
             stmt.setString(1,cl.getNombre());
             stmt.setString(2,cl.getRut());
             stmt.setString(3,cl.getTelefono());
+            stmt.executeUpdate();
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -45,6 +46,8 @@ public class ClienteDAO {
             stmt.setString(2,cl.getRut());
             stmt.setString(3,cl.getTelefono());
             stmt.setInt(4,cl.getId_clientes());
+            stmt.executeUpdate();
+
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -2,10 +2,6 @@ package Model;
 
 public class Auto {
   private int id_auto;
-
-  private int cantidad;
-  private String Nombre;
-
   private String marca;
   private String modelo;
   private int anio;

@@ -13,15 +13,18 @@ public class HerramientaDAO {
         }
     }
     public void crearHerramienta(Herramienta er){
-        String sql = "INSERT INTO clientes (nombre,tipo,estado) values (?,?,?)";
+        String sql = "INSERT INTO herramientas (nombre, tipo, estado) VALUES (?, ?, ?)";
         try(PreparedStatement stmt = connection.prepareStatement(sql)){
             stmt.setString(1,er.getNombre());
             stmt.setString(2,er.getTipo());
             stmt.setString(3,er.getEstado());
+            stmt.executeUpdate();
+
         }catch(SQLException e){
             e.printStackTrace();
         }
     }
+
     public List<Herramienta> obtenerTodos(){
         List<Herramienta> herramientas = new ArrayList<>();
         String sql = "Select * FROM herramientas";
@@ -45,6 +48,8 @@ public class HerramientaDAO {
             stmt.setString(2,er.getTipo());
             stmt.setString(3,er.getEstado());
             stmt.setInt(4,er.getId_herramienta());
+            stmt.executeUpdate();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
