@@ -51,9 +51,7 @@ public class AutoView {
 
         do {
             System.out.print("Año de fundación: ");
-            anio = Integer.parseInt(teclado.nextLine());
-
-            anioComoString = Integer.toString(anio);
+            anioComoString = teclado.nextLine();
 
             if (anioComoString.matches("\\d{4}")) {
                 anio = Integer.parseInt(anioComoString);
@@ -65,16 +63,15 @@ public class AutoView {
         //VALIDACION DE PATENTE
 
         String patente;
-
-        do {
+        
             System.out.print("patente: ");
             patente = teclado.nextLine();
-
-            if (!patente.matches("^[a-zA-Z0-9]{6}$")) {
+        
+        while(!patente.matches("^[a-zA-Z0-9]{6}$")) {
                 System.out.println("Patente no valida, intentelo nuevamente.");
-            }
-
-        }while(!patente.matches("^[a-zA-Z0-9]{6}$"));
+                System.out.print("patente: ");
+                patente = teclado.nextLine();
+        }
 
             Auto car = new Auto();
             car.setMarca(marca);
