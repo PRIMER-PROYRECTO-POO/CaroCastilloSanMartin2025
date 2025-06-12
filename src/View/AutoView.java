@@ -1,48 +1,90 @@
 package View;
 import Model.Auto;
-import Model.AutoDAO;
-
-import javax.swing.*;
 import java.util.*;
 
 public class AutoView {
-    private Scanner sc=new Scanner(System.in);
+    private Scanner teclado = new Scanner(System.in);
 
     public void mostrarMenu(){
-        System.out.println("MENU TALLER MECANICO");
-        System.out.println("1. -Listar Autos");
-        System.out.println("2. -Crear autos");
-        System.out.println("3. -Editar autos");
-        System.out.println("4. -Eliminar autos");
-        System.out.println("5. -Salir");
-        System.out.println("Indique su opcion: ");
+        System.out.println("MENÚ AUTOS");
+        System.out.println("1.- Listar Autos");
+        System.out.println("2.- Crear Autos");
+        System.out.println("3.- Editar Autos");
+        System.out.println("4.- Eliminar Autos");
+        System.out.println("5.- Salir");
+        System.out.print("Indique una opción: ");
     }
-    public void mostrarAutos(List<Auto> autos){
-        if (autos.isEmpty()){
-            System.out.println("No hay vehiculos");
+
+    public void mostrarAutos(List<Auto> car){
+        if(car.isEmpty()){
+            System.out.println("No hay autos");
         }else{
-            autos.forEach(System.out::println);
+            car.forEach(System.out::println);
         }
     }
-    public Auto leerNuevoAuto() {
-        System.out.print("Cantidad: ");
-        int cantidad = sc.nextInt();
-        sc.nextLine();
-        return new Auto(0,cantidad);
+    public Auto leerNuevoAuto(){
+        System.out.print("Marca: ");
+        String marca = teclado.nextLine();
+        System.out.print("Modelo: ");
+        String modelo = teclado.nextLine();
+
+        int anio = 0;
+        boolean valido = false;
+
+        while (!valido) {
+            System.out.print("Año de fundación: ");
+            String entrada = teclado.nextLine();
+
+            try {
+                anio = Integer.parseInt(entrada);
+                if (entrada.length() == 4) {
+                    if(anio > 0) {
+                        valido = true;
+                    }else {
+                        System.out.println("debe ingresar un año valido");
+                    }
+                } else {
+                    System.out.println("debe ingresar un año valido.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida. Debes ingresar un número entero.");
+            }
+        }
+
+        System.out.print("patente: ");
+        String patente = teclado.nextLine();
+
+        if(patente.length() > 6){
+            do{
+                System.out.print("patente fuera de rango, ingrese otra: ");
+                patente = teclado.nextLine();
+            }while(patente.length() > 6);
+        }
+
+        Auto car = new Auto();
+        car.setMarca(marca);
+        car.setModelo(modelo);
+        car.setAnio(anio);
+        car.setPatente(patente);
+
+        return car;
     }
 
     public Auto leerAutoActualizado(){
-        System.out.println("Ingrese el ID del auto a actualizar: ");
-        int id =Integer.parseInt(sc.nextLine());
-        Auto auto=leerNuevoAuto();
-        auto.setId_auto(id);
-        return auto;
+        System.out.print("Ingrese el ID del Auto a actualizar: ");
+        int id = Integer.parseInt(teclado.nextLine());
+
+
+        Auto car = leerNuevoAuto();
+        car.setId_auto(id);
+        return car;
     }
+
     public int leerIdEliminar(){
-        System.out.println("Indique el ID del auto a eliminar");
-        return Integer.parseInt(sc.nextLine());
+        System.out.println("Ingrese el ID del Auto a eliminar: ");
+        return Integer.parseInt(teclado.nextLine());
     }
     public int leerOpcion(){
-        return Integer.parseInt(sc.nextLine());
+        return Integer.parseInt(teclado.nextLine());
     }
 }

@@ -6,25 +6,24 @@ public class AutoController {
     private AutoDAO dao;
     private AutoView view;
 
-    //constructor
-    public AutoController() {
-        dao= new AutoDAO();
-        view=new AutoView();
+    public AutoController(){
+        dao = new AutoDAO();
+        view = new AutoView();
     }
-    public void iniciar(){
+
+    public void iniciar() {
         int opcion;
         do{
             view.mostrarMenu();
-            opcion=view.leerOpcion();
-
-            //falta DAO PARA MODIFICAR
-            switch (opcion){
-                case 1 -> view.(dao.obtenerTodos());
-                case 2 -> dao.(view.leerNuevoEquipo());
-                case 3 -> dao.actualizarEquipo(view.leerEquipoActualizado());
-                case 4 -> dao.eliminarEquipo(view.leerIdEliminar());
-                case 5 -> System.out.println("adios....");
+            opcion = view.leerOpcion();
+            switch (opcion) {
+                case 1 -> view.mostrarAutos(dao.obtenerTodos());
+                case 2 -> dao.crearAuto(view.leerNuevoAuto());
+                case 3 -> dao.actualizarAuto(view.leerAutoActualizado());
+                case 4 -> dao.eliminarAuto(view.leerIdEliminar());
+                case 5 -> System.out.println("¡Adios!");
+                default ->System.out.println("Opción no valida, ingrese otra.");
             }
-        }while(opcion !=5);
+        } while (opcion != 5);
     }
 }
