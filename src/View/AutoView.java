@@ -63,7 +63,9 @@ public class AutoView {
             System.out.print("Año de fundación: ");
             anioComoString = teclado.nextLine();
 
+
             while(!anioComoString.matches("\\d{4}")) {
+
                 System.out.println("Año no valido, intentelo nuevamente.");
                 System.out.print("Año de fundación: ");
                 anioComoString = teclado.nextLine();
@@ -75,7 +77,6 @@ public class AutoView {
 
         String patente;
 
-
             System.out.print("patente: ");
             patente = teclado.nextLine();
             while(!patente.matches("^(?=.*[a-zA-Z])(?=.*\\d)[a-zA-Z0-9]{6}$")) {
@@ -84,6 +85,7 @@ public class AutoView {
                     System.out.print("patente: ");
                     patente = teclado.nextLine();
             }
+
 
             Auto car = new Auto();
             car.setMarca(marca);
