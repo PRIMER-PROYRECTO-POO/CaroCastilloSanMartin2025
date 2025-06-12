@@ -1,5 +1,7 @@
 package View;
 import Model.Auto;
+import Model.AutoDAO;
+
 import java.util.*;
 
 public class AutoView {
@@ -22,71 +24,86 @@ public class AutoView {
             car.forEach(System.out::println);
         }
     }
+
+
     public Auto leerNuevoAuto(){
-        System.out.print("Marca: ");
-        String marca = teclado.nextLine();
+
+        //VALIDACION DE MARCA
+        String marca;
+        do{
+            System.out.print("Marca: ");
+            marca = teclado.nextLine();
+
+            if(!marca.matches("[a-zA-Z]+")) {
+                System.out.println("No valido, intentelo nuevamente.");
+            }
+
+        }while(!marca.matches("[a-zA-Z]+"));
 
         System.out.print("Modelo: ");
         String modelo = teclado.nextLine();
 
-        int anio = 0;
-        boolean valido = false;
 
-        while (!valido) {
+        //VALIDACION DE AÑO
+
+        int anio;
+        String anioComoString;
+
+        do {
             System.out.print("Año de fundación: ");
-            String entrada = teclado.nextLine();
-            try {
-                if (entrada.length() == 4) {
-                    if(anio > 0) {
-                        valido = true;
-                    }else {
-                        System.out.println("debe ingresar un año valido");
-                    }
-                } else {
-                    System.out.println("debe ingresar un año valido.");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Entrada inválida. Debes ingresar un número entero.");
+            anio = Integer.parseInt(teclado.nextLine());
+
+            anioComoString = Integer.toString(anio);
+
+            if (anioComoString.matches("\\d{4}")) {
+                anio = Integer.parseInt(anioComoString);
+            } else {
+                System.out.println("Año no valido, intentelo nuevamente.");
+            }
+        }while(!anioComoString.matches("\\d{4}"));
+
+        //VALIDACION DE PATENTE
+
+        String patente;
+
+        do {
+            System.out.print("patente: ");
+            patente = teclado.nextLine();
+
+            if (!patente.matches("^[a-zA-Z0-9]{6}$")) {
+                System.out.println("Patente no valida, intentelo nuevamente.");
             }
 
+        }while(!patente.matches("^[a-zA-Z0-9]{6}$"));
+
+            Auto car = new Auto();
+            car.setMarca(marca);
+            car.setModelo(modelo);
+            car.setAnio(anio);
+            car.setPatente(patente);
+
+            return car;
         }
 
-        System.out.print("patente: ");
-        String patente = teclado.nextLine();
+    public Auto leerAutoActualizado(Auto autoExistente) {
+        System.out.println("Actualizando auto con ID: " + autoExistente.getId_auto());
 
-        if(patente.length() > 6){
-            do{
-                System.out.print("patente fuera de rango, ingrese otra: ");
-                patente = teclado.nextLine();
-            }while(patente.length() > 6);
-        }
+        Auto actualizado = leerNuevoAuto(); // se piden los nuevos datos
+        actualizado.setId_auto(autoExistente.getId_auto()); // se conserva el ID original
 
-        Auto car = new Auto();
-        car.setMarca(marca);
-        car.setModelo(modelo);
-        car.setAnio(anio);
-        car.setPatente(patente);
-
-        return car;
+        return actualizado;
     }
 
-    public Auto leerAutoActualizado(){
-        System.out.print("Ingrese el ID del Auto a actualizar: ");
-        int id = Integer.parseInt(teclado.nextLine());
-
-        Auto car = leerNuevoAuto();
-        if(id > 0 && id <= car.getId_auto()){
-            car = leerNuevoAuto();
-            car.setId_auto(id);
-        }
-
-        return car;
-    }
-
-    public int leerIdEliminar(){
-        System.out.println("Ingrese el ID del Auto a eliminar: ");
+    public int pedirIdAuto() {
+        System.out.print("Ingrese el ID del auto: ");
         return Integer.parseInt(teclado.nextLine());
     }
+
+    public int leerIdEliminar(Auto autoExistente) {
+        System.out.println("Eliminando auto con ID: " + autoExistente.getId_auto());
+        return autoExistente.getId_auto(); // ✅ devolvemos el ID
+    }
+
     public int leerOpcion(){
         return Integer.parseInt(teclado.nextLine());
     }
