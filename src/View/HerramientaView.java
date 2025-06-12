@@ -24,8 +24,18 @@ public class HerramientaView {
     }
 
     public Herramienta leerNuevaHerramienta(){
-        System.out.print("Nombre: ");
-        String nombre = teclado.nextLine();
+        String nombre = "";
+        boolean valido = false;
+        while (!valido) {
+            System.out.print("Nombre: ");
+            nombre = teclado.nextLine();
+
+            if (nombre.matches(".\\d.")) {
+                System.out.println("El nombre no debe contener números. Intente nuevamente.");
+            } else {
+                valido = true;
+            }
+        }
         System.out.print("Tipo: ");
         String tipo = teclado.nextLine();
         System.out.print("Estado: ");
