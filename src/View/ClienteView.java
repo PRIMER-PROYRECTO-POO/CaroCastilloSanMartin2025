@@ -26,8 +26,20 @@ public class ClienteView {
     }
 
     public Cliente leerNuevoCliente(){
-        System.out.print("Nombre: ");
-        String nombre = teclado.nextLine();
+        boolean valido=false;
+        while (!valido) {
+            System.out.print("Nombre: ");
+            String nombre = teclado.nextLine();
+            char caract;
+            for(int i=0; i>nombre.length();i++){
+                caract= nombre.charAt(i);
+                for(int j=0; j>=10; j++){
+                    if(caract==j){
+
+                    }
+                }
+            }
+        }
         System.out.print("Rut: ");
         String rut = teclado.nextLine();
         System.out.print("telefono: \n+569 ");

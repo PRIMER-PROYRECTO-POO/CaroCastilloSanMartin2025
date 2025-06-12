@@ -34,9 +34,7 @@ public class AutoView {
         while (!valido) {
             System.out.print("Año de fundación: ");
             String entrada = teclado.nextLine();
-
             try {
-                anio = Integer.parseInt(entrada);
                 if (entrada.length() == 4) {
                     if(anio > 0) {
                         valido = true;
@@ -49,6 +47,7 @@ public class AutoView {
             } catch (NumberFormatException e) {
                 System.out.println("Entrada inválida. Debes ingresar un número entero.");
             }
+
         }
 
         System.out.print("patente: ");
