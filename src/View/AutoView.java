@@ -25,6 +25,7 @@ public class AutoView {
     public Auto leerNuevoAuto(){
         System.out.print("Marca: ");
         String marca = teclado.nextLine();
+
         System.out.print("Modelo: ");
         String modelo = teclado.nextLine();
 
@@ -34,9 +35,7 @@ public class AutoView {
         while (!valido) {
             System.out.print("Año de fundación: ");
             String entrada = teclado.nextLine();
-
             try {
-                anio = Integer.parseInt(entrada);
                 if (entrada.length() == 4) {
                     if(anio > 0) {
                         valido = true;
@@ -49,6 +48,7 @@ public class AutoView {
             } catch (NumberFormatException e) {
                 System.out.println("Entrada inválida. Debes ingresar un número entero.");
             }
+
         }
 
         System.out.print("patente: ");
@@ -74,9 +74,12 @@ public class AutoView {
         System.out.print("Ingrese el ID del Auto a actualizar: ");
         int id = Integer.parseInt(teclado.nextLine());
 
-
         Auto car = leerNuevoAuto();
-        car.setId_auto(id);
+        if(id > 0 && id <= car.getId_auto()){
+            car = leerNuevoAuto();
+            car.setId_auto(id);
+        }
+
         return car;
     }
 

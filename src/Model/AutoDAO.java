@@ -24,6 +24,7 @@ public class AutoDAO {
             e.printStackTrace();
         }
     }
+
     public List<Auto> obtenerTodos(){
         List<Auto> autitos = new ArrayList<>();
         String sql = "Select * FROM autos";

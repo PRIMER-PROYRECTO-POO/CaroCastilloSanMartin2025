@@ -2,6 +2,8 @@ package Controller;
 import Model.AutoDAO;
 import View.AutoView;
 
+import java.sql.Connection;
+
 public class AutoController {
     private AutoDAO dao;
     private AutoView view;
