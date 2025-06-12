@@ -26,38 +26,17 @@ public class ClienteView {
     }
 
     public Cliente leerNuevoCliente(){
-        boolean valido = false;
-        String nombre = "";
-
-        while (!valido) {
             System.out.print("Nombre: ");
-            nombre = teclado.nextLine();
+            String nombre = teclado.nextLine();
+            System.out.print("Rut: ");
+            String rut = teclado.nextLine();
+            System.out.print("telefono: ");
+            String telefono = teclado.nextLine();
 
-            if (nombre.matches(".*\\d.*")){
-                System.out.println("El nombre no debe contener números. Intente nuevamente.");
-            } else {
-                valido = true;
-            }
-        }
-
-        System.out.print("Rut: ");
-        String rut = teclado.nextLine();
-        String telefono;
-
-        do {
-            System.out.print("telefono: \n+569 ");
-            telefono = teclado.nextLine();
-
-            if (!telefono.matches("\\d{8}")) {
-                System.out.println("Número inválido. Debe contener exactamente 8 dígitos numéricos.");
-            }
-
-        } while (!telefono.matches("\\d{8}"));
-
-        Cliente cliente = new Cliente();
-        cliente.setNombre(nombre);
-        cliente.setRut(rut);
-        cliente.setTelefono(telefono);
+            Cliente cliente = new Cliente();
+            cliente.setNombre(nombre);
+            cliente.setRut(rut);
+            cliente.setTelefono(telefono);
 
         return cliente;
     }

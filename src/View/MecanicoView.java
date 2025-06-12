@@ -24,45 +24,13 @@ public class MecanicoView{
     }
 
     public Mecanico leerNuevoMecanico(){
-        boolean valido = false;
-        String nombre = "";
 
-        while (!valido) {
-            System.out.print("Nombre: ");
-            nombre = teclado.nextLine();
-
-            if (nombre.matches(".*\\d.*")){
-                System.out.println("El nombre no debe contener números. Intente nuevamente.");
-            } else {
-                valido = true;
-            }
-        }
-
+        System.out.print("Nombre: ");
+        String nombre = teclado.nextLine();
         System.out.print("Especialidad: ");
         String especialidad = teclado.nextLine();
-
-        int anios = 0;
-        boolean validos = false;
-
-        while (!validos) {
-            System.out.print("Años de experiencia: ");
-            String entrada = teclado.nextLine();
-
-            try {
-                anios = Integer.parseInt(entrada);
-                if (entrada.length() <= 2) {
-                    if(anios > 0) {
-                        validos = true;
-                    }else {
-                        System.out.println("debe ingresar años de experiencia validos.");
-                    }
-                } else {
-                    System.out.println("debe ingresar años de experiencia validos.");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Entrada inválida. Debes ingresar un número entero.");
-            }
-        }
+        System.out.print("Años de experiencia: ");
+        int anios = Integer.parseInt(teclado.nextLine());
 
         Mecanico mecanico = new Mecanico();
         mecanico.setNombre(nombre);
