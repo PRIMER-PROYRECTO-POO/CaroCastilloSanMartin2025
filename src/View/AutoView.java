@@ -107,7 +107,7 @@ public class AutoView {
         System.out.print("Ingrese el ID del auto: ");
         String idPal = teclado.nextLine();
 
-        while(!idPal.matches("[0-9]+")){
+        while(!idPal.matches("\\d+")){
             System.out.println("Id no valido.");
             System.out.print("Ingrese el ID del auto: ");
             idPal = teclado.nextLine();
@@ -117,7 +117,20 @@ public class AutoView {
     }
 
 
-    public int leerOpcion(){
-        return Integer.parseInt(teclado.nextLine());
+    public String leerOpcion() {
+        String respuesta;
+
+        do {
+            System.out.print("Opción: ");
+            respuesta = teclado.nextLine();
+
+            if (!respuesta.matches("\\d+")) {
+                System.out.println("Ingrese nuevamente el número");
+            }
+
+        } while (!respuesta.matches("\\d+"));
+
+        return respuesta;
     }
+
 }

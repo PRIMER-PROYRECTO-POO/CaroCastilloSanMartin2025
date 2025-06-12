@@ -30,29 +30,29 @@ public class AutoController {
         int id = view.pedirIdAuto(); // o view.leerIdEliminar(), si ya tienes eso
 
         Auto autoExistente = dao.buscarAutoPorId(id);
-
-        if (autoExistente != null) {
-            dao.eliminarAuto(id);
-            System.out.println("Auto eliminado correctamente.");
-        } else {
-            System.out.println("No se encontró un auto con ese ID.");
+        while(autoExistente == null){
+            System.out.println("No se encontró un auto con ese ID. Por favor, volver a ingresar");
+            id = view.pedirIdAuto();
+            autoExistente = dao.buscarAutoPorId(id);
         }
+        dao.eliminarAuto(id);
+        System.out.println("Auto eliminado correctamente.");
     }
 
 
     public void iniciar() {
-        int opcion;
+        String opcion;
         do{
             view.mostrarMenu();
             opcion = view.leerOpcion();
             switch (opcion) {
-                case 1 -> view.mostrarAutos(dao.obtenerTodos());
-                case 2 -> dao.crearAuto(view.leerNuevoAuto());
-                case 3 -> actualizarAuto();
-                case 4 -> eliminarAuto();
-                case 5 -> System.out.println("¡Adios!");
+                case "1" -> view.mostrarAutos(dao.obtenerTodos());
+                case "2" -> dao.crearAuto(view.leerNuevoAuto());
+                case "3" -> actualizarAuto();
+                case "4" -> eliminarAuto();
+                case "5" -> System.out.println("¡Adios!");
                 default ->System.out.println("Opción no valida, ingrese otra.");
             }
-        } while (opcion != 5);
+        } while (!opcion.equals("5"));
     }
 }
