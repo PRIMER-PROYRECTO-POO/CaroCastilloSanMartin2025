@@ -23,13 +23,23 @@ public class AutoView {
         }
     }
     public Auto leerNuevoAuto(){
-        System.out.print("Marca: ");
-        String marca = teclado.nextLine();
+        boolean valido = false;
+        String marca="";
+        while (!valido) {
+            System.out.print("Marca: ");
+            marca = teclado.nextLine();
+
+            if (marca.matches(".\\d.")) {
+                System.out.println("El nombre no debe contener números. Intente nuevamente.");
+            } else {
+                valido = true;
+            }
+        }
         System.out.print("Modelo: ");
         String modelo = teclado.nextLine();
 
         int anio = 0;
-        boolean valido = false;
+        valido = false;
 
         while (!valido) {
             System.out.print("Año de fundación: ");
