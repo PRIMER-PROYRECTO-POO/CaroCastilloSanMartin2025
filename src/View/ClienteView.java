@@ -26,18 +26,16 @@ public class ClienteView {
     }
 
     public Cliente leerNuevoCliente(){
-        boolean valido=false;
+        boolean valido = false;
+        String nombre="";
         while (!valido) {
             System.out.print("Nombre: ");
-            String nombre = teclado.nextLine();
-            char caract;
-            for(int i=0; i>nombre.length();i++){
-                caract= nombre.charAt(i);
-                for(int j=0; j>=10; j++){
-                    if(caract==j){
+            nombre = teclado.nextLine();
 
-                    }
-                }
+            if (nombre.matches(".\\d.")) {
+                System.out.println("El nombre no debe contener números. Intente nuevamente.");
+            } else {
+                valido = true;
             }
         }
         System.out.print("Rut: ");

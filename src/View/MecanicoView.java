@@ -24,13 +24,32 @@ public class MecanicoView{
     }
 
     public Mecanico leerNuevoMecanico(){
-        System.out.print("Nombre: ");
-        String nombre = teclado.nextLine();
-        System.out.print("Especialidad: ");
-        String especialidad = teclado.nextLine();
+        boolean valido = false;
+        String nombre="",especialidad="";
+        while (!valido) {
+            System.out.print("Nombre: ");
+            nombre = teclado.nextLine();
+
+            if (nombre.matches(".\\d.")) {
+                System.out.println("El nombre no debe contener números. Intente nuevamente.");
+            } else {
+                valido = true;
+            }
+        }
+        valido=false;
+        while (!valido) {
+            System.out.print("Especialidad: ");
+            especialidad = teclado.nextLine();
+
+            if (nombre.matches(".\\d.")) {
+                System.out.println("El nombre no debe contener números. Intente nuevamente.");
+            } else {
+                valido = true;
+            }
+        }
 
         int anios = 0;
-        boolean valido = false;
+        valido = false;
 
         while (!valido) {
             System.out.print("Años de experiencia: ");
