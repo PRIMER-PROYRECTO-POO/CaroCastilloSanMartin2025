@@ -22,44 +22,126 @@ public class AutoView {
             car.forEach(System.out::println);
         }
     }
-    public Auto leerNuevoAuto(){
-        System.out.print("Marca: ");
-        String marca = teclado.nextLine();
-        System.out.print("Modelo: ");
-        String modelo = teclado.nextLine();
 
+    // Método para validar strings no vacíos
+    private String leerStringNoVacio(String mensaje) {
+        String entrada = "";
+        boolean valido = false;
+
+        while (!valido) {
+            System.out.print(mensaje);
+            entrada = teclado.nextLine().trim();
+
+            // 3. Validador de vacío
+            if (entrada.isEmpty()) {
+                System.out.println("ERROR: No puede dejar el campo vacío. Intente nuevamente.");
+                continue;
+            }
+
+            // 2. Validador de tipo de datos (solo letras, números y espacios para nombres)
+            if (!entrada.matches("[a-zA-Z0-9\\s]+")) {
+                System.out.println("ERROR: Solo se permiten letras, números y espacios. Intente nuevamente.");
+                continue;
+            }
+
+            valido = true;
+        }
+
+        return entrada;
+    }
+
+    // Método para validar año
+    private int leerAnio() {
         int anio = 0;
         boolean valido = false;
 
         while (!valido) {
-            System.out.print("Año de fundación: ");
-            String entrada = teclado.nextLine();
+            System.out.print("Año: ");
+            String entrada = teclado.nextLine().trim();
 
+            // 3. Validador de vacío
+            if (entrada.isEmpty()) {
+                System.out.println("ERROR: No puede dejar el campo vacío. Intente nuevamente.");
+                continue;
+            }
+
+            // 2. Validador de tipo de datos
             try {
                 anio = Integer.parseInt(entrada);
-                if (entrada.length() == 4) {
-                    if(anio > 0) {
-                        valido = true;
-                    }else {
-                        System.out.println("debe ingresar un año valido");
-                    }
-                } else {
-                    System.out.println("debe ingresar un año valido.");
-                }
             } catch (NumberFormatException e) {
-                System.out.println("Entrada inválida. Debes ingresar un número entero.");
+                System.out.println("ERROR: Debe ingresar un número entero válido. Intente nuevamente.");
+                continue;
             }
+
+            // 1. Validador de cantidades positivas
+            if (anio <= 0) {
+                System.out.println("ERROR: El año debe ser positivo (mayor a 0). Intente nuevamente.");
+                continue;
+            }
+
+            // 4. Validador de opciones disponibles (rango de años válidos)
+            if (anio < 1886 || anio > 2025) {
+                System.out.println("ERROR: El año debe estar entre 1886 y 2025. Intente nuevamente.");
+                continue;
+            }
+
+            valido = true;
         }
 
-        System.out.print("patente: ");
-        String patente = teclado.nextLine();
+        return anio;
+    }
 
-        if(patente.length() > 6){
-            do{
-                System.out.print("patente fuera de rango, ingrese otra: ");
-                patente = teclado.nextLine();
-            }while(patente.length() > 6);
+    // Método para validar patente
+    private String leerPatente() {
+        String patente = "";
+        boolean valido = false;
+
+        while (!valido) {
+            System.out.print("Patente (máximo 6 caracteres): ");
+            patente = teclado.nextLine().trim();
+
+            // 3. Validador de vacío
+            if (patente.isEmpty()) {
+                System.out.println("ERROR: No puede dejar el campo vacío. Intente nuevamente.");
+                continue;
+            }
+
+            // 2. Validador de tipo de datos (letras y números para patente)
+            if (!patente.matches("[A-Za-z0-9]+")) {
+                System.out.println("ERROR: La patente solo puede contener letras y números. Intente nuevamente.");
+                continue;
+            }
+
+            // 4. Validador de opciones disponibles (longitud de patente)
+            if (patente.length() > 6) {
+                System.out.println("ERROR: La patente no puede tener más de 6 caracteres. Intente nuevamente.");
+                continue;
+            }
+
+            // 1. Validador adicional (mínimo de caracteres)
+            if (patente.length() < 3) {
+                System.out.println("ERROR: La patente debe tener al menos 3 caracteres. Intente nuevamente.");
+                continue;
+            }
+
+            valido = true;
         }
+
+        return patente;
+    }
+
+    public Auto leerNuevoAuto(){
+        // Validación de marca
+        String marca = leerStringNoVacio("Marca: ");
+
+        // Validación de modelo
+        String modelo = leerStringNoVacio("Modelo: ");
+
+        // Validación de año
+        int anio = leerAnio();
+
+        // Validación de patente
+        String patente = leerPatente();
 
         Auto car = new Auto();
         car.setMarca(marca);
@@ -70,10 +152,49 @@ public class AutoView {
         return car;
     }
 
-    public Auto leerAutoActualizado(){
-        System.out.print("Ingrese el ID del Auto a actualizar: ");
-        int id = Integer.parseInt(teclado.nextLine());
+    // Método para validar ID
+    private int leerIdValido(String mensaje) {
+        int id = 0;
+        boolean valido = false;
 
+        while (!valido) {
+            System.out.print(mensaje);
+            String entrada = teclado.nextLine().trim();
+
+            // 3. Validador de vacío
+            if (entrada.isEmpty()) {
+                System.out.println("ERROR: No puede dejar el campo vacío. Intente nuevamente.");
+                continue;
+            }
+
+            // 2. Validador de tipo de datos
+            try {
+                id = Integer.parseInt(entrada);
+            } catch (NumberFormatException e) {
+                System.out.println("ERROR: Debe ingresar un número entero válido. Intente nuevamente.");
+                continue;
+            }
+
+            // 1. Validador de cantidades positivas
+            if (id <= 0) {
+                System.out.println("ERROR: El ID debe ser positivo (mayor a 0). Intente nuevamente.");
+                continue;
+            }
+
+            // 4. Validador de opciones disponibles (rango razonable de IDs)
+            if (id > 999999) {
+                System.out.println("ERROR: El ID no puede ser mayor a 999999. Intente nuevamente.");
+                continue;
+            }
+
+            valido = true;
+        }
+
+        return id;
+    }
+
+    public Auto leerAutoActualizado(){
+        int id = leerIdValido("Ingrese el ID del Auto a actualizar: ");
 
         Auto car = leerNuevoAuto();
         car.setId_auto(id);
@@ -81,10 +202,53 @@ public class AutoView {
     }
 
     public int leerIdEliminar(){
-        System.out.println("Ingrese el ID del Auto a eliminar: ");
-        return Integer.parseInt(teclado.nextLine());
+        return leerIdValido("Ingrese el ID del Auto a eliminar: ");
     }
-    public int leerOpcion(){
-        return Integer.parseInt(teclado.nextLine());
+    public int leerOpcion() {
+        int opcion = 0;
+        boolean esValido = false;
+
+        while (!esValido) {
+            try {
+                String entrada = teclado.nextLine().trim();
+
+                // 3. Validador de vacío
+                if (entrada.isEmpty()) {
+                    System.out.println("ERROR: No puede dejar el campo vacío. Intente nuevamente.");
+                    System.out.print("Indique una opción: ");
+                    continue;
+                }
+
+                // 2. Validador de tipo de datos
+                try {
+                    opcion = Integer.parseInt(entrada);
+                } catch (NumberFormatException e) {
+                    System.out.println("ERROR: Debe ingresar un número entero válido. Intente nuevamente.");
+                    System.out.print("Indique una opción: ");
+                    continue;
+                }
+
+                // 1. Validador de cantidades positivas
+                if (opcion <= 0) {
+                    System.out.println("ERROR: El número debe ser positivo (mayor a 0). Intente nuevamente.");
+                    System.out.print("Indique una opción: ");
+                    continue;
+                }
+
+                // 4. Validador de opciones disponibles
+                if (opcion < 1 || opcion > 5) {
+                    System.out.println("ERROR: Opción no válida. Debe elegir entre 1 y 5. Intente nuevamente.");
+                    System.out.print("Indique una opción: ");
+                    continue;
+                }
+
+                esValido = true;
+
+            } catch (Exception e) {
+                System.out.println("ERROR inesperado: " + e.getMessage() + ". Intente nuevamente.");
+                System.out.print("Indique una opción: ");
+            }
+        }
+        return opcion;
     }
 }
