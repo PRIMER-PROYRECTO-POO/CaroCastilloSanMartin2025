@@ -65,7 +65,7 @@ public class Auto {
             "id_auto=" + id_auto +
             ", marca='" + marca + '\'' +
             ", modelo='" + modelo + '\'' +
-            ", anio=" + anio +
+            ", año=" + anio +
             ", patente='" + patente + '\'' +
             '}';
   }

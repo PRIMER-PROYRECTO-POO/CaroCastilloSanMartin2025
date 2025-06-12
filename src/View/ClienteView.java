@@ -30,8 +30,13 @@ public class ClienteView {
         String nombre = teclado.nextLine();
         System.out.print("Rut: ");
         String rut = teclado.nextLine();
-        System.out.print("telefono: ");
+        System.out.print("telefono: \n+569 ");
         String telefono = teclado.nextLine();
+
+        if(telefono.length() != 8){
+            System.out.print("Número no valido, intentelo de nuevo: ");
+            telefono = teclado.nextLine();
+        }
 
         Cliente cliente = new Cliente();
         cliente.setNombre(nombre);

@@ -10,11 +10,11 @@ public class Main {
     public static void main (String [] args){
         int op;
 
+
         do {
             System.out.println("MENU PRINCIPAL\n1)Gestionar Auto\n2)Gestionar Clientes\n3)Gestionar Herramientas\n4)Gestionar Mecanico\n5)Salir");
             System.out.print("Indique una opción: ");
-            op = teclado.nextInt();
-
+            op = Integer.parseInt(teclado.nextLine());
             switch (op) {
                 case 1:
                     new AutoController().iniciar();
@@ -30,6 +30,10 @@ public class Main {
                     break;
                 case 5:
                     System.out.println("¡Adios!");
+                    break;
+                default:
+                    System.out.println("Opción no valida, ingrese otra.");
+
             }
         }while(op != 5);
     }

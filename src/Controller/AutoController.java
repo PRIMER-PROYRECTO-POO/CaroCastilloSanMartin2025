@@ -22,6 +22,7 @@ public class AutoController {
                 case 3 -> dao.actualizarAuto(view.leerAutoActualizado());
                 case 4 -> dao.eliminarAuto(view.leerIdEliminar());
                 case 5 -> System.out.println("¡Adios!");
+                default ->System.out.println("Opción no valida, ingrese otra.");
             }
         } while (opcion != 5);
     }

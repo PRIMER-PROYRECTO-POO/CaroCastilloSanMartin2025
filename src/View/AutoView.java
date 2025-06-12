@@ -27,10 +27,39 @@ public class AutoView {
         String marca = teclado.nextLine();
         System.out.print("Modelo: ");
         String modelo = teclado.nextLine();
-        System.out.print("Año de fundación: ");
-        int anio = Integer.parseInt(teclado.nextLine());
+
+        int anio = 0;
+        boolean valido = false;
+
+        while (!valido) {
+            System.out.print("Año de fundación: ");
+            String entrada = teclado.nextLine();
+
+            try {
+                anio = Integer.parseInt(entrada);
+                if (entrada.length() == 4) {
+                    if(anio > 0) {
+                        valido = true;
+                    }else {
+                        System.out.println("debe ingresar un año valido");
+                    }
+                } else {
+                    System.out.println("debe ingresar un año valido.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida. Debes ingresar un número entero.");
+            }
+        }
+
         System.out.print("patente: ");
         String patente = teclado.nextLine();
+
+        if(patente.length() > 6){
+            do{
+                System.out.print("patente fuera de rango, ingrese otra: ");
+                patente = teclado.nextLine();
+            }while(patente.length() > 6);
+        }
 
         Auto car = new Auto();
         car.setMarca(marca);
@@ -40,13 +69,17 @@ public class AutoView {
 
         return car;
     }
+
     public Auto leerAutoActualizado(){
         System.out.print("Ingrese el ID del Auto a actualizar: ");
         int id = Integer.parseInt(teclado.nextLine());
+
+
         Auto car = leerNuevoAuto();
         car.setId_auto(id);
         return car;
     }
+
     public int leerIdEliminar(){
         System.out.println("Ingrese el ID del Auto a eliminar: ");
         return Integer.parseInt(teclado.nextLine());

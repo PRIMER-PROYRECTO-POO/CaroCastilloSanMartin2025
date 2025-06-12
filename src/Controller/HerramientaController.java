@@ -22,6 +22,8 @@ public class HerramientaController {
                 case 3 -> dao.actualizarHerramienta(view.leerHerramientaActualizada());
                 case 4 -> dao.eliminarHerramienta(view.leerIdEliminar());
                 case 5 -> System.out.println("¡Adios!");
+                default ->System.out.println("Opción no valida, ingrese otra.");
+
             }
         }while(opcion != 5);
     }

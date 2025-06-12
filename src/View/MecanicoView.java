@@ -28,8 +28,29 @@ public class MecanicoView{
         String nombre = teclado.nextLine();
         System.out.print("Especialidad: ");
         String especialidad = teclado.nextLine();
-        System.out.print("Años de experiencia: ");
-        int anios = Integer.parseInt(teclado.nextLine());
+
+        int anios = 0;
+        boolean valido = false;
+
+        while (!valido) {
+            System.out.print("Años de experiencia: ");
+            String entrada = teclado.nextLine();
+
+            try {
+                anios = Integer.parseInt(entrada);
+                if (entrada.length() <= 2) {
+                    if(anios > 0) {
+                        valido = true;
+                    }else {
+                        System.out.println("debe ingresar años de experiencia validos.");
+                    }
+                } else {
+                    System.out.println("debe ingresar años de experiencia validos.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida. Debes ingresar un número entero.");
+            }
+        }
 
         Mecanico mecanico = new Mecanico();
         mecanico.setNombre(nombre);

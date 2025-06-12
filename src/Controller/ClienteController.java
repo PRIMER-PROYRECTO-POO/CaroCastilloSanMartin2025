@@ -22,6 +22,8 @@ public class ClienteController {
                 case 3 -> dao.actualizarCliente(view.leerClienteActualizado());
                 case 4 -> dao.eliminarCliente(view.leerIdEliminar());
                 case 5 -> System.out.println("¡Adiós!");
+                default ->System.out.println("Opción no valida, ingrese otra.");
+
             }
         }while(opcion != 5);
     }
