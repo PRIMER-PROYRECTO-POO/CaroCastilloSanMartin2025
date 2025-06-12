@@ -30,51 +30,60 @@ public class AutoView {
 
         //VALIDACION DE MARCA
         String marca;
-        do{
+
             System.out.print("Marca: ");
             marca = teclado.nextLine();
 
-            if(!marca.matches("[a-zA-Z]+")) {
+            while(!marca.matches("[a-zA-Z]+")){
+
                 System.out.println("No valido, intentelo nuevamente.");
+                System.out.print("Marca: ");
+                marca = teclado.nextLine();
             }
 
-        }while(!marca.matches("[a-zA-Z]+"));
 
+        //VALIDACION DE MODELO
         System.out.print("Modelo: ");
         String modelo = teclado.nextLine();
+
+        while(modelo.trim().isEmpty()){
+
+            System.out.println("Ingrese un dato valido");
+
+            System.out.print("Modelo: ");
+            modelo = teclado.nextLine();
+        }
 
 
         //VALIDACION DE AÑO
 
-        int anio;
+        int anio = 0;
         String anioComoString;
 
-        do {
             System.out.print("Año de fundación: ");
-            anio = Integer.parseInt(teclado.nextLine());
+            anioComoString = teclado.nextLine();
 
-            anioComoString = Integer.toString(anio);
-
-            if (anioComoString.matches("\\d{4}")) {
-                anio = Integer.parseInt(anioComoString);
-            } else {
+            while(!anioComoString.matches("\\d{4}")) {
                 System.out.println("Año no valido, intentelo nuevamente.");
+                System.out.print("Año de fundación: ");
+                anioComoString = teclado.nextLine();
             }
-        }while(!anioComoString.matches("\\d{4}"));
+
+            anio = Integer.parseInt(anioComoString);
 
         //VALIDACION DE PATENTE
 
         String patente;
 
-        do {
+
             System.out.print("patente: ");
             patente = teclado.nextLine();
+            while(!patente.matches("^(?=.*[a-zA-Z])(?=.*\\d)[a-zA-Z0-9]{6}$")) {
 
-            if (!patente.matches("^[a-zA-Z0-9]{6}$")) {
-                System.out.println("Patente no valida, intentelo nuevamente.");
+                    System.out.println("Patente no valida, intentelo nuevamente.");
+                    System.out.print("patente: ");
+                    patente = teclado.nextLine();
             }
-
-        }while(!patente.matches("^[a-zA-Z0-9]{6}$"));
 
             Auto car = new Auto();
             car.setMarca(marca);
@@ -96,13 +105,17 @@ public class AutoView {
 
     public int pedirIdAuto() {
         System.out.print("Ingrese el ID del auto: ");
-        return Integer.parseInt(teclado.nextLine());
+        String idPal = teclado.nextLine();
+
+        while(!idPal.matches("[0-9]+")){
+            System.out.println("Id no valido.");
+            System.out.print("Ingrese el ID del auto: ");
+            idPal = teclado.nextLine();
+        }
+
+        return Integer.parseInt(idPal);
     }
 
-    public int leerIdEliminar(Auto autoExistente) {
-        System.out.println("Eliminando auto con ID: " + autoExistente.getId_auto());
-        return autoExistente.getId_auto(); // ✅ devolvemos el ID
-    }
 
     public int leerOpcion(){
         return Integer.parseInt(teclado.nextLine());
