@@ -1,6 +1,6 @@
 package View;
 import Model.Cliente;
-import Model.Herramienta;
+
 
 import java.util.*;
 
@@ -27,26 +27,32 @@ public class ClienteView {
 
     public Cliente leerNuevoCliente(){
         boolean valido = false;
-        String nombre="";
+        String nombre = "";
+
         while (!valido) {
             System.out.print("Nombre: ");
             nombre = teclado.nextLine();
 
-            if (nombre.matches(".\\d.")) {
+            if (nombre.matches(".*\\d.*")){
                 System.out.println("El nombre no debe contener números. Intente nuevamente.");
             } else {
                 valido = true;
             }
         }
+
         System.out.print("Rut: ");
         String rut = teclado.nextLine();
-        System.out.print("telefono: \n+569 ");
-        String telefono = teclado.nextLine();
+        String telefono;
 
-        if(telefono.length() != 8){
-            System.out.print("Número no valido, intentelo de nuevo: ");
+        do {
+            System.out.print("telefono: \n+569 ");
             telefono = teclado.nextLine();
-        }
+
+            if (!telefono.matches("\\d{8}")) {
+                System.out.println("Número inválido. Debe contener exactamente 8 dígitos numéricos.");
+            }
+
+        } while (!telefono.matches("\\d{8}"));
 
         Cliente cliente = new Cliente();
         cliente.setNombre(nombre);
