@@ -26,19 +26,17 @@ public class AutoView {
 
 
     public Auto leerNuevoAuto(){
-
         //VALIDACION DE MARCA
         String marca;
 
+        System.out.print("Marca: ");
+        marca = teclado.nextLine();
+
+        while(!marca.matches("[a-zA-Z]+")){
+            System.out.println("No valido, intentelo nuevamente.");
             System.out.print("Marca: ");
             marca = teclado.nextLine();
-
-            while(!marca.matches("[a-zA-Z]+")){
-
-                System.out.println("No valido, intentelo nuevamente.");
-                System.out.print("Marca: ");
-                marca = teclado.nextLine();
-            }
+        }
 
 
         //VALIDACION DE MODELO
@@ -76,24 +74,22 @@ public class AutoView {
 
         String patente;
 
-            System.out.print("patente: ");
-            patente = teclado.nextLine();
-            while(!patente.matches("^(?=.*[a-zA-Z])(?=.*\\d)[a-zA-Z0-9]{6}$")) {
+        System.out.print("patente: ");
+        patente = teclado.nextLine();
+        while(!patente.matches("^(?=.*[a-zA-Z])(?=.*\\d)[a-zA-Z0-9]{6}$")) {
 
-                    System.out.println("Patente no valida, intentelo nuevamente.");
-                    System.out.print("patente: ");
-                    patente = teclado.nextLine();
-            }
-
-
-            Auto car = new Auto();
-            car.setMarca(marca);
-            car.setModelo(modelo);
-            car.setAnio(anio);
-            car.setPatente(patente);
-
-            return car;
+                System.out.println("Patente no valida, intentelo nuevamente.");
+                System.out.print("patente: ");
+                patente = teclado.nextLine();
         }
+        Auto car = new Auto();
+        car.setMarca(marca);
+        car.setModelo(modelo);
+        car.setAnio(anio);
+        car.setPatente(patente);
+
+        return car;
+    }
 
     public Auto leerAutoActualizado(Auto autoExistente) {
         System.out.println("Actualizando auto con ID: " + autoExistente.getId_auto());

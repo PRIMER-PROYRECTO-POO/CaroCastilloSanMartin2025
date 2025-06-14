@@ -61,4 +61,26 @@ public class ClienteDAO {
             e.printStackTrace();
         }
     }
+    public Cliente buscarAutoPorIdd(int id) {
+        Cliente cl = null;
+        String sql = "SELECT * FROM autos WHERE id_auto = ?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, id);
+            ResultSet respuesta = stmt.executeQuery();
+            if (respuesta.next()) {
+                cl = new Cliente();
+                cl.setId_clientes(respuesta.getInt("id_auto"));
+                cl.setNombre(respuesta.getString("nombre"));
+                cl.setRut(respuesta.getString("rut"));
+                cl.setTelefono(respuesta.getString("telefono"));
+            }
+            respuesta.close();
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println("Error al buscar auto por ID: " + e.getMessage());
+        }
+
+        return cl; // Si no encuentra nada, devuelve null
+    }
 }
