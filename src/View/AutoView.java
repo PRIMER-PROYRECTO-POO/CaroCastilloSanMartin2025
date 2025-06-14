@@ -112,8 +112,14 @@ public class AutoView {
         return Integer.parseInt(idPal);
     }
 
-    public String leerOpcion() {
-        return (teclado.nextLine());
+    public int leerOpcion() {
+        String respuesta = teclado.nextLine();
+        while(!respuesta.matches("\\d+")){
+            System.out.println("Por favor, ingrese la opción en numero sin espacios 🙄");
+            System.out.print("Indique opción: ");
+            respuesta=teclado.nextLine();
+        }
+        return Integer.parseInt(respuesta);
     }
 
 }

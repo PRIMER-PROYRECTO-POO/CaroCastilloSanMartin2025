@@ -74,6 +74,12 @@ public class ClienteView {
     }
 
     public int leerOpcion(){
-        return Integer.parseInt(teclado.nextLine());
+        String respuesta = teclado.nextLine();
+        while(!respuesta.matches("\\d+")){
+            System.out.println("Por favor, ingrese la opción en numero sin espacios 🙄");
+            System.out.print("Indique opción: ");
+            respuesta=teclado.nextLine();
+        }
+        return Integer.parseInt(respuesta);
     }
 }

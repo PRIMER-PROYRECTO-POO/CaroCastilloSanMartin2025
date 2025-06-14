@@ -41,18 +41,18 @@ public class AutoController {
 
 
     public void iniciar() {
-        String opcion;
+        int opcion;
         do{
             view.mostrarMenu();
             opcion = view.leerOpcion();
             switch (opcion) {
-                case "1" -> view.mostrarAutos(dao.obtenerTodos());
-                case "2" -> dao.crearAuto(view.leerNuevoAuto());
-                case "3" -> actualizarAuto();
-                case "4" -> eliminarAuto();
-                case "5" -> System.out.println("¡Adios!");
+                case 1 -> view.mostrarAutos(dao.obtenerTodos());
+                case 2 -> dao.crearAuto(view.leerNuevoAuto());
+                case 3 -> actualizarAuto();
+                case 4 -> eliminarAuto();
+                case 5 -> System.out.println("¡Adios!");
                 default ->System.out.println("Opción no valida, ingrese otra.");
             }
-        } while (!opcion.equals("5"));
+        } while (opcion!=5);
     }
 }
