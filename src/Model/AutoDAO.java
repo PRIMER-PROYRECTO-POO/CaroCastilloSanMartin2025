@@ -64,4 +64,24 @@ public class AutoDAO {
             e.printStackTrace();
         }
     }
+    public boolean buscarAutoPorId(int id) {
+        String sql = "SELECT EXISTS (SELECT 1 FROM autos WHERE id_auto = ?)";
+
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, id);
+
+            ResultSet resultado = stmt.executeQuery();
+
+            if (resultado.next()) {
+                return resultado.getInt(1) == 1;
+            }
+
+            resultado.close();
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
