@@ -53,13 +53,17 @@ public class ClienteView {
                 System.out.print("Ingrese el ID del cliente a eliminar: ");
                 String input = teclado.nextLine();
 
-                if (input.trim().isEmpty()) {
+                if (esCadenaVacia(input) || soloEspacios(input)) {
                     System.out.println("Error: El ID no puede estar vacío. Intente nuevamente.");
                     continue;
                 }
 
-                id = Integer.parseInt(input.trim());
+                if (!soloDigitosCustom(input)) {
+                    System.out.println("Error: Debe ingresar un número válido. Intente nuevamente.");
+                    continue;
+                }
 
+                id = convertirAEntero(input);
                 if (id <= 0) {
                     System.out.println("Error: El ID debe ser un número positivo. Intente nuevamente.");
                     continue;
@@ -67,7 +71,7 @@ public class ClienteView {
 
                 valido = true;
 
-            } catch (NumberFormatException e) {
+            } catch (Exception e) {
                 System.out.println("Error: Debe ingresar un número válido. Intente nuevamente.");
             }
         } while (!valido);
@@ -83,14 +87,19 @@ public class ClienteView {
             try {
                 String input = teclado.nextLine();
 
-                if (input.trim().isEmpty()) {
+                if (esCadenaVacia(input) || soloEspacios(input)) {
                     System.out.println("Error: Debe seleccionar una opción. Intente nuevamente.");
                     mostrarMenu();
                     continue;
                 }
 
-                opcion = Integer.parseInt(input.trim());
+                if (!soloDigitosCustom(input)) {
+                    System.out.println("Error: Solo se permiten números. Intente nuevamente.");
+                    mostrarMenu();
+                    continue;
+                }
 
+                opcion = convertirAEntero(input);
                 if (opcion <= 0 || opcion > 5) {
                     System.out.println("Error: Opción no válida. Debe seleccionar entre 1 y 5. Intente nuevamente.");
                     mostrarMenu();
@@ -99,7 +108,7 @@ public class ClienteView {
 
                 valido = true;
 
-            } catch (NumberFormatException e) {
+            } catch (Exception e) {
                 System.out.println("Error: Debe ingresar un número válido. Intente nuevamente.");
                 mostrarMenu();
             }
@@ -116,26 +125,25 @@ public class ClienteView {
             System.out.print("Nombre: ");
             nombre = teclado.nextLine();
 
-            if (nombre.trim().isEmpty()) {
+            if (esCadenaVacia(nombre) || soloEspacios(nombre)) {
                 System.out.println("Error: El nombre no puede estar vacío.");
                 continue;
             }
 
-            if (!nombre.trim().matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
+            if (!soloLetrasYEspaciosCustom(nombre)) {
                 System.out.println("Error: El nombre solo puede contener letras y espacios.");
                 continue;
             }
 
-            if (nombre.trim().length() < 2) {
+            if (contarCaracteres(nombre) < 2) {
                 System.out.println("Error: El nombre debe tener al menos 2 caracteres.");
                 continue;
             }
 
             valido = true;
-
         } while (!valido);
 
-        return nombre.trim();
+        return nombre;
     }
 
     private String leerRut() {
@@ -146,26 +154,20 @@ public class ClienteView {
             System.out.print("RUT (formato: 12345678-9): ");
             rut = teclado.nextLine();
 
-            if (rut.trim().isEmpty()) {
+            if (esCadenaVacia(rut) || soloEspacios(rut)) {
                 System.out.println("Error: El RUT no puede estar vacío.");
                 continue;
             }
 
-            if (!rut.trim().matches("^\\d{7,8}-[0-9kK]$")) {
-                System.out.println("Error: Formato de RUT inválido.");
-                continue;
-            }
-
-            if (!validarRut(rut.trim())) {
-                System.out.println("Error: RUT inválido. Verifique el dígito verificador.");
+            if (!validarRut(rut)) {
+                System.out.println("Error: Formato de RUT inválido o dígito verificador incorrecto.");
                 continue;
             }
 
             valido = true;
-
         } while (!valido);
 
-        return rut.trim().toUpperCase();
+        return convertirAMayusculas(rut);
     }
 
     private String leerTelefono() {
@@ -173,34 +175,28 @@ public class ClienteView {
         boolean valido = false;
 
         do {
-            System.out.print("Teléfono (+569 ########): ");
+            System.out.print("Teléfono (########): ");
             telefono = teclado.nextLine();
 
-            if (telefono.trim().isEmpty()) {
+            if (esCadenaVacia(telefono) || soloEspacios(telefono)) {
                 System.out.println("Error: El teléfono no puede estar vacío.");
                 continue;
             }
 
-            if (!telefono.trim().matches("^\\d+$")) {
+            if (!soloDigitosCustom(telefono)) {
                 System.out.println("Error: El teléfono solo puede contener números.");
                 continue;
             }
 
-            if (telefono.trim().length() != 8) {
-                System.out.println("Error: El teléfono debe tener exactamente 8 dígitos.");
-                continue;
-            }
-
-            if (!telefono.trim().matches("^[6-9]\\d{7}$")) {
-                System.out.println("Error: Número de celular inválido. Debe comenzar con 6, 7, 8 o 9.");
+            if (contarCaracteres(telefono) != 8 || primerCaracterMenorA(telefono, '6')) {
+                System.out.println("Error: Número de celular inválido. Debe comenzar con 6, 7, 8 o 9 y tener 8 dígitos.");
                 continue;
             }
 
             valido = true;
-
         } while (!valido);
 
-        return telefono.trim();
+        return telefono;
     }
 
     private int leerIdActualizar() {
@@ -212,21 +208,24 @@ public class ClienteView {
                 System.out.print("Ingrese el ID del cliente a actualizar: ");
                 String input = teclado.nextLine();
 
-                if (input.trim().isEmpty()) {
+                if (esCadenaVacia(input) || soloEspacios(input)) {
                     System.out.println("Error: El ID no puede estar vacío.");
                     continue;
                 }
 
-                id = Integer.parseInt(input.trim());
+                if (!soloDigitosCustom(input)) {
+                    System.out.println("Error: Solo se permiten números.");
+                    continue;
+                }
 
+                id = convertirAEntero(input);
                 if (id <= 0) {
                     System.out.println("Error: El ID debe ser un número positivo.");
                     continue;
                 }
 
                 valido = true;
-
-            } catch (NumberFormatException e) {
+            } catch (Exception e) {
                 System.out.println("Error: Debe ingresar un número válido.");
             }
         } while (!valido);
@@ -235,16 +234,116 @@ public class ClienteView {
     }
 
     private boolean validarRut(String rut) {
-        String[] partes = rut.split("-");
-        if (partes.length != 2) return false;
+        int guionIndex = buscarCaracter(rut, '-');
+        if (guionIndex == -1 || guionIndex == 0 || guionIndex == contarCaracteres(rut) - 1) return false;
 
-        String numero = partes[0];
-        String dv = partes[1].toUpperCase();
+        String numero = construirSubcadena(rut, 0, guionIndex);
+        String dv = convertirAMayusculas(construirSubcadena(rut, guionIndex + 1, contarCaracteres(rut)));
 
-        if (numero.length() < 7 || numero.length() > 8) return false;
-        if (!dv.matches("[0-9K]")) return false;
-        if (!numero.matches("\\d+")) return false;
+        if (contarCaracteres(numero) < 7 || contarCaracteres(numero) > 8) return false;
+        if (contarCaracteres(dv) != 1 || (!esDigito(dv.charAt(0)) && !esK(dv.charAt(0)))) return false;
 
+        return soloDigitosCustom(numero);
+    }
+
+    // Métodos utilitarios sin usar métodos nativos prohibidos
+
+    private boolean esCadenaVacia(String texto) {
+        return texto != null && contarCaracteres(texto) == 0;
+    }
+
+    private boolean soloEspacios(String texto) {
+        for (int i = 0; i < contarCaracteres(texto); i++) {
+            if (texto.charAt(i) != ' ') return false;
+        }
         return true;
+    }
+
+    private boolean soloDigitosCustom(String texto) {
+        for (int i = 0; i < contarCaracteres(texto); i++) {
+            if (!esDigito(texto.charAt(i))) return false;
+        }
+        return true;
+    }
+
+    private boolean esDigito(char c) {
+        return c >= '0' && c <= '9';
+    }
+
+    private boolean esLetra(char c) {
+        return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
+    }
+
+    private boolean soloLetrasYEspaciosCustom(String texto) {
+        String acentos = "áéíóúÁÉÍÓÚñÑ";
+        for (int i = 0; i < contarCaracteres(texto); i++) {
+            char c = texto.charAt(i);
+            if (!(esLetra(c) || c == ' ' || contieneCaracter(acentos, c))) return false;
+        }
+        return true;
+    }
+
+    private boolean contieneCaracter(String cadena, char buscado) {
+        for (int i = 0; i < contarCaracteres(cadena); i++) {
+            if (cadena.charAt(i) == buscado) return true;
+        }
+        return false;
+    }
+
+    private int buscarCaracter(String cadena, char buscado) {
+        for (int i = 0; i < contarCaracteres(cadena); i++) {
+            if (cadena.charAt(i) == buscado) return i;
+        }
+        return -1;
+    }
+
+    private int contarCaracteres(String texto) {
+        int count = 0;
+        try {
+            while (true) {
+                texto.charAt(count);
+                count++;
+            }
+        } catch (Exception e) {
+            // Fin de la cadena
+        }
+        return count;
+    }
+
+    private int convertirAEntero(String texto) {
+        int resultado = 0;
+        for (int i = 0; i < contarCaracteres(texto); i++) {
+            resultado = resultado * 10 + (texto.charAt(i) - '0');
+        }
+        return resultado;
+    }
+
+    private String convertirAMayusculas(String texto) {
+        String resultado = "";
+        for (int i = 0; i < contarCaracteres(texto); i++) {
+            char c = texto.charAt(i);
+            if (c >= 'a' && c <= 'z') {
+                resultado += (char)(c - 32);
+            } else {
+                resultado += c;
+            }
+        }
+        return resultado;
+    }
+
+    private boolean primerCaracterMenorA(String texto, char referencia) {
+        return contarCaracteres(texto) > 0 && texto.charAt(0) < referencia;
+    }
+
+    private boolean esK(char c) {
+        return c == 'K';
+    }
+
+    private String construirSubcadena(String texto, int desde, int hasta) {
+        String resultado = "";
+        for (int i = desde; i < hasta; i++) {
+            resultado += texto.charAt(i);
+        }
+        return resultado;
     }
 }

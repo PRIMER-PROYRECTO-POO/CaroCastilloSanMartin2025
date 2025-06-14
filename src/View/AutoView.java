@@ -23,20 +23,52 @@ public class AutoView {
         }
     }
 
+    private boolean contieneSoloLetrasNumerosEspacios(String texto) {
+        for (int i = 0; i < texto.length(); i++) {
+            char c = texto.charAt(i);
+            if (!Character.isLetterOrDigit(c) && !Character.isSpaceChar(c)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean contieneSoloLetrasYNumeros(String texto) {
+        for (int i = 0; i < texto.length(); i++) {
+            char c = texto.charAt(i);
+            if (!Character.isLetterOrDigit(c)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean estaVacioOContieneSoloEspacios(String texto) {
+        if (texto == null || texto.equals("")) {
+            return true;
+        }
+        for (int i = 0; i < texto.length(); i++) {
+            if (texto.charAt(i) != ' ') {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private String leerStringNoVacio(String mensaje) {
         String entrada = "";
         boolean valido = false;
 
         while (!valido) {
             System.out.print(mensaje);
-            entrada = teclado.nextLine().trim();
+            entrada = teclado.nextLine();
 
-            if (entrada.isEmpty()) {
+            if (estaVacioOContieneSoloEspacios(entrada)) {
                 System.out.println("ERROR: No puede dejar el campo vacío. Intente nuevamente.");
                 continue;
             }
 
-            if (!entrada.matches("[a-zA-Z0-9\\s]+")) {
+            if (!contieneSoloLetrasNumerosEspacios(entrada)) {
                 System.out.println("ERROR: Solo se permiten letras, números y espacios. Intente nuevamente.");
                 continue;
             }
@@ -53,9 +85,9 @@ public class AutoView {
 
         while (!valido) {
             System.out.print("Año: ");
-            String entrada = teclado.nextLine().trim();
+            String entrada = teclado.nextLine();
 
-            if (entrada.isEmpty()) {
+            if (estaVacioOContieneSoloEspacios(entrada)) {
                 System.out.println("ERROR: No puede dejar el campo vacío. Intente nuevamente.");
                 continue;
             }
@@ -89,14 +121,14 @@ public class AutoView {
 
         while (!valido) {
             System.out.print("Patente (máximo 6 caracteres): ");
-            patente = teclado.nextLine().trim();
+            patente = teclado.nextLine();
 
-            if (patente.isEmpty()) {
+            if (estaVacioOContieneSoloEspacios(patente)) {
                 System.out.println("ERROR: No puede dejar el campo vacío. Intente nuevamente.");
                 continue;
             }
 
-            if (!patente.matches("[A-Za-z0-9]+")) {
+            if (!contieneSoloLetrasYNumeros(patente)) {
                 System.out.println("ERROR: La patente solo puede contener letras y números. Intente nuevamente.");
                 continue;
             }
@@ -116,7 +148,6 @@ public class AutoView {
 
         return patente;
     }
-
 
     public Auto leerNuevoAuto(){
         String marca = leerStringNoVacio("Marca: ");
@@ -139,9 +170,9 @@ public class AutoView {
 
         while (!valido) {
             System.out.print(mensaje);
-            String entrada = teclado.nextLine().trim();
+            String entrada = teclado.nextLine();
 
-            if (entrada.isEmpty()) {
+            if (estaVacioOContieneSoloEspacios(entrada)) {
                 System.out.println("ERROR: No puede dejar el campo vacío. Intente nuevamente.");
                 continue;
             }
@@ -186,9 +217,9 @@ public class AutoView {
 
         while (!esValido) {
             try {
-                String entrada = teclado.nextLine().trim();
+                String entrada = teclado.nextLine();
 
-                if (entrada.isEmpty()) {
+                if (estaVacioOContieneSoloEspacios(entrada)) {
                     System.out.println("ERROR: No puede dejar el campo vacío. Intente nuevamente.");
                     System.out.print("Indique una opción: ");
                     continue;

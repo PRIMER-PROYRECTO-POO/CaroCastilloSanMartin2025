@@ -23,33 +23,82 @@ public class MecanicoView{
         }
     }
 
+    // Método para verificar si una cadena está vacía o sólo tiene espacios
+    private boolean esVacioOEspacios(String s) {
+        if (s == null || s.equals("")) return true;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) != ' ') return false;
+        }
+        return true;
+    }
+
+    // Método para validar que una cadena contiene solo dígitos
+    private boolean soloDigitos(String s) {
+        if (s == null || s.equals("")) return false;
+        for (int i = 0; i < s.length(); i++) {
+            if (!Character.isDigit(s.charAt(i))) return false;
+        }
+        return true;
+    }
+
+    // Método para validar que nombre solo contiene letras (mayus y minus), espacios y caracteres con tilde
+    private boolean soloLetrasYEspacios(String s) {
+        if (s == null || s.equals("")) return false;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (!( (c >= 'a' && c <= 'z') ||
+                    (c >= 'A' && c <= 'Z') ||
+                    c == ' ' ||
+                    c == 'á' || c == 'é' || c == 'í' || c == 'ó' || c == 'ú' ||
+                    c == 'Á' || c == 'É' || c == 'Í' || c == 'Ó' || c == 'Ú' ||
+                    c == 'ñ' || c == 'Ñ')) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // Método para validar que especialidad contiene solo letras mayúsculas y guion bajo
+    private boolean soloMayusculasYGuionBajo(String s) {
+        if (s == null || s.equals("")) return false;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (!( (c >= 'A' && c <= 'Z') || c == '_')) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     // VALIDADOR PARA OPCIÓN DEL MENÚ
     public int leerOpcion(){
         boolean valido = false;
         int opcion = 0;
 
         while (!valido) {
-            String entrada = teclado.nextLine().trim();
+            String entrada = teclado.nextLine();
 
-            // 3. Validador de vacío
-            if (entrada.isEmpty()) {
+            if (esVacioOEspacios(entrada)) {
                 System.out.println("Error: No puede dejar la opción vacía.");
                 System.out.print("Ingrese una opción: ");
                 continue;
             }
 
+            if (!soloDigitos(entrada)) {
+                System.out.println("Error: Debe ingresar un número entero válido.");
+                System.out.print("Ingrese una opción: ");
+                continue;
+            }
+
             try {
-                // 2. Tipo de datos
                 opcion = Integer.parseInt(entrada);
 
-                // 1. Cantidades positivas
                 if (opcion <= 0) {
                     System.out.println("Error: Debe ingresar un número positivo.");
                     System.out.print("Ingrese una opción: ");
                     continue;
                 }
 
-                // 4. Opciones disponibles
                 if (opcion >= 1 && opcion <= 5) {
                     valido = true;
                 } else {
@@ -73,27 +122,23 @@ public class MecanicoView{
 
         while (!valido) {
             System.out.print("Nombre: ");
-            nombre = teclado.nextLine().trim();
+            nombre = teclado.nextLine();
 
-            // 3. Validador de vacío
-            if (nombre.isEmpty()) {
+            if (esVacioOEspacios(nombre)) {
                 System.out.println("Error: El nombre no puede estar vacío.");
                 continue;
             }
 
-            // 2. Tipo de datos (solo letras y espacios)
-            if (!nombre.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
+            if (!soloLetrasYEspacios(nombre)) {
                 System.out.println("Error: El nombre solo puede contener letras y espacios.");
                 continue;
             }
 
-            // 1. Cantidades positivas (longitud mínima)
             if (nombre.length() < 2) {
                 System.out.println("Error: El nombre debe tener al menos 2 caracteres.");
                 continue;
             }
 
-            // 4. Opciones disponibles (longitud máxima)
             if (nombre.length() > 50) {
                 System.out.println("Error: El nombre no puede exceder 50 caracteres.");
                 continue;
@@ -107,45 +152,45 @@ public class MecanicoView{
 
     // VALIDADOR PARA ESPECIALIDAD
     private String validarEspecialidad() {
-        boolean valido = false;
-        String especialidad = "";
         List<String> especialidadesValidas = Arrays.asList(
                 "MOTOR", "FRENOS", "SUSPENSION", "ELECTRICIDAD", "TRANSMISION",
                 "AIRE_ACONDICIONADO", "CARROCERIA", "GENERAL"
         );
 
+        int opcion = -1;
+        boolean valido = false;
+
         while (!valido) {
-            System.out.println("Especialidades disponibles: " + String.join(", ", especialidadesValidas));
-            System.out.print("Especialidad: ");
-            especialidad = teclado.nextLine().trim().toUpperCase();
+            System.out.println("Seleccione la especialidad:");
+            for (int i = 0; i < especialidadesValidas.size(); i++) {
+                System.out.println((i + 1) + ". " + especialidadesValidas.get(i));
+            }
+            System.out.print("Ingrese el número correspondiente: ");
+            String entrada = teclado.nextLine();
 
-            // 3. Validador de vacío
-            if (especialidad.isEmpty()) {
-                System.out.println("Error: La especialidad no puede estar vacía.");
+            if (esVacioOEspacios(entrada)) {
+                System.out.println("Error: Debe ingresar un número.");
                 continue;
             }
 
-            // 2. Tipo de datos (solo letras, números y guiones bajos)
-            if (!especialidad.matches("^[A-Z_]+$")) {
-                System.out.println("Error: La especialidad solo puede contener letras mayúsculas y guiones bajos.");
+            if (!soloDigitos(entrada)) {
+                System.out.println("Error: Solo se permiten números.");
                 continue;
             }
 
-            // 1. Cantidades positivas (longitud mínima)
-            if (especialidad.length() < 3) {
-                System.out.println("Error: La especialidad debe tener al menos 3 caracteres.");
-                continue;
-            }
-
-            // 4. Opciones disponibles
-            if (especialidadesValidas.contains(especialidad)) {
-                valido = true;
-            } else {
-                System.out.println("Error: Especialidad no válida. Seleccione una de las opciones disponibles.");
+            try {
+                opcion = Integer.parseInt(entrada);
+                if (opcion >= 1 && opcion <= especialidadesValidas.size()) {
+                    valido = true;
+                } else {
+                    System.out.println("Error: Debe ingresar un número entre 1 y " + especialidadesValidas.size());
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Error: Entrada inválida.");
             }
         }
 
-        return especialidad;
+        return especialidadesValidas.get(opcion - 1);
     }
 
     // VALIDADOR PARA AÑOS DE EXPERIENCIA
@@ -155,25 +200,26 @@ public class MecanicoView{
 
         while (!valido) {
             System.out.print("Años de experiencia (1-50): ");
-            String entrada = teclado.nextLine().trim();
+            String entrada = teclado.nextLine();
 
-            // 3. Validador de vacío
-            if (entrada.isEmpty()) {
+            if (esVacioOEspacios(entrada)) {
                 System.out.println("Error: Los años de experiencia no pueden estar vacíos.");
                 continue;
             }
 
+            if (!soloDigitos(entrada)) {
+                System.out.println("Error: Debe ingresar un número entero válido.");
+                continue;
+            }
+
             try {
-                // 2. Tipo de datos
                 anios = Integer.parseInt(entrada);
 
-                // 1. Cantidades positivas
                 if (anios <= 0) {
                     System.out.println("Error: Los años de experiencia deben ser un número positivo.");
                     continue;
                 }
 
-                // 4. Opciones disponibles (rango válido)
                 if (anios >= 1 && anios <= 50) {
                     valido = true;
                 } else {
@@ -195,25 +241,26 @@ public class MecanicoView{
 
         while (!valido) {
             System.out.print("Ingrese el ID del mecanico a " + tipoOperacion + ": ");
-            String entrada = teclado.nextLine().trim();
+            String entrada = teclado.nextLine();
 
-            // 3. Validador de vacío
-            if (entrada.isEmpty()) {
+            if (esVacioOEspacios(entrada)) {
                 System.out.println("Error: El ID no puede estar vacío.");
                 continue;
             }
 
+            if (!soloDigitos(entrada)) {
+                System.out.println("Error: El ID debe ser un número entero válido.");
+                continue;
+            }
+
             try {
-                // 2. Tipo de datos
                 id = Integer.parseInt(entrada);
 
-                // 1. Cantidades positivas
                 if (id <= 0) {
                     System.out.println("Error: El ID debe ser un número positivo.");
                     continue;
                 }
 
-                // 4. Opciones disponibles (rango válido para ID)
                 if (id >= 1 && id <= 999999) {
                     valido = true;
                 } else {

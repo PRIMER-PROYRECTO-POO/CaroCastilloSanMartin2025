@@ -52,12 +52,12 @@ public class HerramientaView {
                 System.out.print("Ingrese ID de la herramienta a eliminar: ");
                 String input = teclado.nextLine();
 
-                if (input.trim().isEmpty()) {
+                if (esCadenaVacia(input)) {
                     System.out.println("Error: El ID no puede estar vacío. Intente nuevamente.");
                     continue;
                 }
 
-                id = Integer.parseInt(input.trim());
+                id = Integer.parseInt(input);
 
                 if (id <= 0) {
                     System.out.println("Error: El ID debe ser un número positivo. Intente nuevamente.");
@@ -82,13 +82,13 @@ public class HerramientaView {
             try {
                 String input = teclado.nextLine();
 
-                if (input.trim().isEmpty()) {
+                if (esCadenaVacia(input)) {
                     System.out.println("Error: Debe seleccionar una opción. Intente nuevamente.");
                     mostrarMenu();
                     continue;
                 }
 
-                opcion = Integer.parseInt(input.trim());
+                opcion = Integer.parseInt(input);
 
                 if (opcion <= 0) {
                     System.out.println("Error: Debe ingresar un número positivo. Intente nuevamente.");
@@ -121,22 +121,22 @@ public class HerramientaView {
             System.out.print("Nombre: ");
             nombre = teclado.nextLine();
 
-            if (nombre.trim().isEmpty()) {
+            if (esCadenaVacia(nombre)) {
                 System.out.println("Error: El nombre no puede estar vacío. Intente nuevamente.");
                 continue;
             }
 
-            if (!nombre.trim().matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ 0-9]+$")) {
+            if (!esNombreValido(nombre)) {
                 System.out.println("Error: El nombre solo puede contener letras, números y espacios. Intente nuevamente.");
                 continue;
             }
 
-            if (nombre.trim().length() < 2) {
+            if (nombre.length() < 2) {
                 System.out.println("Error: El nombre debe tener al menos 2 caracteres. Intente nuevamente.");
                 continue;
             }
 
-            if (nombre.trim().length() > 50) {
+            if (nombre.length() > 50) {
                 System.out.println("Error: El nombre no puede tener más de 50 caracteres. Intente nuevamente.");
                 continue;
             }
@@ -145,7 +145,7 @@ public class HerramientaView {
 
         } while (!valido);
 
-        return nombre.trim();
+        return nombre;
     }
 
     private String leerTipo() {
@@ -158,17 +158,24 @@ public class HerramientaView {
             System.out.print("Tipo: ");
             tipo = teclado.nextLine();
 
-            if (tipo.trim().isEmpty()) {
+            if (esCadenaVacia(tipo)) {
                 System.out.println("Error: El tipo no puede estar vacío. Intente nuevamente.");
                 continue;
             }
 
-            if (!tipo.trim().matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+$")) {
+            if (!esTipoValidoFormato(tipo)) {
                 System.out.println("Error: El tipo solo puede contener letras. Intente nuevamente.");
                 continue;
             }
 
-            boolean tipoValido = Arrays.asList(tiposValidos).contains(tipo.trim().toLowerCase());
+            boolean tipoValido = false;
+            String tipoMinus = tipo.toLowerCase();
+            for (String t : tiposValidos) {
+                if (t.equals(tipoMinus)) {
+                    tipoValido = true;
+                    break;
+                }
+            }
 
             if (!tipoValido) {
                 System.out.println("Error: Tipo no válido. Debe ser uno de los tipos disponibles. Intente nuevamente.");
@@ -179,41 +186,46 @@ public class HerramientaView {
 
         } while (!valido);
 
-        return tipo.trim().toLowerCase();
+        return tipo.toLowerCase();
     }
 
     private String leerEstado() {
-        String estado = "";
+        int opcion = 0;
         boolean valido = false;
-        String[] estadosValidos = {"disponible", "en uso"};
 
         do {
-            System.out.println("Estados disponibles: disponible, en uso");
-            System.out.print("Estado: ");
-            estado = teclado.nextLine();
+            System.out.println("Seleccione estado:");
+            System.out.println("[1] Disponible");
+            System.out.println("[2] En uso");
+            System.out.print("Ingrese opción (1 o 2): ");
 
-            if (estado.trim().isEmpty()) {
-                System.out.println("Error: El estado no puede estar vacío. Intente nuevamente.");
+            String input = teclado.nextLine();
+
+            if (esCadenaVacia(input)) {
+                System.out.println("Error: Debe seleccionar una opción. Intente nuevamente.");
                 continue;
             }
 
-            if (!estado.trim().matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$")) {
-                System.out.println("Error: El estado solo puede contener letras y espacios. Intente nuevamente.");
+            try {
+                opcion = Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                System.out.println("Error: Debe ingresar un número válido (1 o 2). Intente nuevamente.");
                 continue;
             }
 
-            boolean estadoValido = Arrays.asList(estadosValidos).contains(estado.trim().toLowerCase());
-
-            if (!estadoValido) {
-                System.out.println("Error: Estado no válido. Debe ser 'disponible' o 'en uso'. Intente nuevamente.");
+            if (opcion != 1 && opcion != 2) {
+                System.out.println("Error: Opción no válida. Debe seleccionar 1 o 2. Intente nuevamente.");
                 continue;
             }
 
             valido = true;
-
         } while (!valido);
 
-        return estado.trim().toLowerCase();
+        if (opcion == 1) {
+            return "disponible";
+        } else {
+            return "en uso";
+        }
     }
 
     private int leerIdActualizar() {
@@ -225,12 +237,12 @@ public class HerramientaView {
                 System.out.print("Ingrese el ID de la herramienta a actualizar: ");
                 String input = teclado.nextLine();
 
-                if (input.trim().isEmpty()) {
+                if (esCadenaVacia(input)) {
                     System.out.println("Error: El ID no puede estar vacío. Intente nuevamente.");
                     continue;
                 }
 
-                id = Integer.parseInt(input.trim());
+                id = Integer.parseInt(input);
 
                 if (id <= 0) {
                     System.out.println("Error: El ID debe ser un número positivo. Intente nuevamente.");
@@ -245,5 +257,45 @@ public class HerramientaView {
         } while (!valido);
 
         return id;
+    }
+
+    // FUNCIONES AUXILIARES
+
+    private boolean esCadenaVacia(String s) {
+        if (s == null || s.length() == 0) return true;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) != ' ') return false;
+        }
+        return true;
+    }
+
+    private boolean esNombreValido(String s) {
+        // Solo letras (mayúsc/minúsc), números, espacios y letras con acento, ñ
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (!( (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ||
+                    (c >= '0' && c <= '9') || c == ' ' ||
+                    c == 'á' || c == 'é' || c == 'í' || c == 'ó' || c == 'ú' ||
+                    c == 'Á' || c == 'É' || c == 'Í' || c == 'Ó' || c == 'Ú' ||
+                    c == 'ñ' || c == 'Ñ' )) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean esTipoValidoFormato(String s) {
+        // Solo letras (mayúsc/minúsc) y letras con acento, ñ, sin espacios
+        if (s == null || s.length() == 0) return false;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ||
+                    c == 'á' || c == 'é' || c == 'í' || c == 'ó' || c == 'ú' ||
+                    c == 'Á' || c == 'É' || c == 'Í' || c == 'Ó' || c == 'Ú' ||
+                    c == 'ñ' || c == 'Ñ')) {
+                return false;
+            }
+        }
+        return true;
     }
 }
