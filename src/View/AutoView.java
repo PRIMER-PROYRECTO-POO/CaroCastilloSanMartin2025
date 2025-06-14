@@ -120,19 +120,7 @@ public class AutoView {
 
 
     public String leerOpcion() {
-        String respuesta;
-
-        do {
-            System.out.print("Opción: ");
-            respuesta = teclado.nextLine();
-
-            if (!respuesta.matches("\\d+")) {
-                System.out.println("Ingrese nuevamente el número");
-            }
-
-        } while (!respuesta.matches("\\d+"));
-
-        return respuesta;
+        return (teclado.next());
     }
 
 }
