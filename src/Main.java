@@ -9,12 +9,10 @@ public class Main {
     static Scanner teclado = new Scanner (System.in);
     public static void main (String [] args){
         int op;
-
-
         do {
             System.out.println("MENU PRINCIPAL\n1)Gestionar Auto\n2)Gestionar Clientes\n3)Gestionar Herramientas\n4)Gestionar Mecanico\n5)Salir");
             System.out.print("Indique una opción: ");
-            op = Integer.parseInt(teclado.nextLine());
+            op = validadorInt();
             switch (op) {
                 case 1:
                     new AutoController().iniciar();
@@ -35,6 +33,15 @@ public class Main {
                     System.out.println("Opción no valida, ingrese otra.");
 
             }
-        }while(op != 5);
+        }while(op!=5);
+    }
+    public static int validadorInt(){
+        String respuesta = teclado.nextLine();
+        while(!respuesta.matches("\\d+")){
+            System.out.println("Por favor, ingrese la opción en numero sin espacios 🙄");
+            System.out.print("Indique opción: ");
+            respuesta=teclado.nextLine();
+        }
+        return Integer.parseInt(respuesta);
     }
 }

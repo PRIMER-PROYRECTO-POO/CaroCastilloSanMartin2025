@@ -27,7 +27,7 @@ public class ClienteView {
 
     public Cliente leerNuevoCliente(){
         boolean valido = false;
-        String nombre = "";
+        String nombre = "", rut, telefono;
 
         while (!valido) {
             System.out.print("Nombre: ");
@@ -40,19 +40,17 @@ public class ClienteView {
             }
         }
 
-        System.out.print("Rut: ");
-        String rut = teclado.nextLine();
-        String telefono;
+        System.out.print("Rut: "); //validación pendiente
+        rut = teclado.nextLine();
 
-        do {
+
+        System.out.print("telefono: \n+569 ");
+        telefono = teclado.nextLine();
+        while(!telefono.matches("\\d{8}")){
+            System.out.println("Número inválido. Debe contener exactamente 8 dígitos numéricos.");
             System.out.print("telefono: \n+569 ");
             telefono = teclado.nextLine();
-
-            if (!telefono.matches("\\d{8}")) {
-                System.out.println("Número inválido. Debe contener exactamente 8 dígitos numéricos.");
-            }
-
-        } while (!telefono.matches("\\d{8}"));
+        }
 
         Cliente cliente = new Cliente();
         cliente.setNombre(nombre);
