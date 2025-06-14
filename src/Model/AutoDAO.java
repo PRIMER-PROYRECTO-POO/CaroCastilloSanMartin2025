@@ -96,24 +96,27 @@ public class AutoDAO {
             e.printStackTrace();
         }
     }
-    public boolean buscarAutoPorId(int id) {
-        String sql = "SELECT EXISTS (SELECT 1 FROM autos WHERE id_auto = ?)";
-
+    public Auto buscarAutoPorIdd(int id) {
+        Auto auto = null;
+        String sql = "SELECT * FROM autos WHERE id_auto = ?";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setInt(1, id);
-
-            ResultSet resultado = stmt.executeQuery();
-
-            if (resultado.next()) {
-                return resultado.getInt(1) == 1;
+            ResultSet respuesta = stmt.executeQuery();
+            if (respuesta.next()) {
+                auto = new Auto();
+                auto.setId_auto(respuesta.getInt("id_auto"));
+                auto.setMarca(respuesta.getString("marca"));
+                auto.setModelo(respuesta.getString("modelo"));
+                auto.setAnio(respuesta.getInt("anio"));
+                auto.setPatente(respuesta.getString("patente"));
             }
-
-            resultado.close();
+            respuesta.close();
             stmt.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Error al buscar auto por ID: " + e.getMessage());
         }
-        return false;
+
+        return auto; // Si no encuentra nada, devuelve null
     }
 }

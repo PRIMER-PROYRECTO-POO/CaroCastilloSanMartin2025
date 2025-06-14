@@ -1,6 +1,5 @@
 package View;
 import Model.Auto;
-import Model.AutoDAO;
 
 import java.util.*;
 
@@ -116,7 +115,6 @@ public class AutoView {
         }
         return Integer.parseInt(idPal);
     }
-
 
     public String leerOpcion() {
         return (teclado.nextLine());
