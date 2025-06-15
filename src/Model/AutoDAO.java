@@ -73,6 +73,7 @@ public class AutoDAO {
             e.printStackTrace();
         }return autitos;
     }
+
     public void actualizarAuto(Auto car){
         String sql = "UPDATE autos SET marca=?, modelo=?, anio=?, patente=? WHERE id_auto=?";
         try(PreparedStatement stmt = connection.prepareStatement(sql)){
@@ -87,6 +88,7 @@ public class AutoDAO {
             e.printStackTrace();
         }
     }
+
     public void eliminarAuto(int id){
         String sql = "DELETE FROM autos WHERE id_auto=?";
         try(PreparedStatement stmt = connection.prepareStatement(sql)){

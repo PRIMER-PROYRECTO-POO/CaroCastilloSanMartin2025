@@ -13,7 +13,7 @@ public class ClienteDAO {
         }
     }
 
-    public Cliente buscarClientePorId(int id) {
+    public Cliente buscarClientePorId(int id){
         Cliente cliente = null;
 
         String sql = "SELECT * FROM clientes WHERE id_clientes = ?";

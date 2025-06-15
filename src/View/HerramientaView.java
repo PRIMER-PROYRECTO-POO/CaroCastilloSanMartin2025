@@ -24,11 +24,11 @@ public class HerramientaView {
         }
     }
 
-    public Herramienta leerNuevaHerramienta(){
+    public Herramienta leerNuevaHerramienta() {
         System.out.print("Nombre: ");
         String nombre = teclado.nextLine();
 
-        while(!nombre.matches("[a-z-A-Z ]+")){
+        while (!nombre.matches("[a-z-A-Z ]+")) {
             System.out.println("Nombre no valido, ingreselo nuevamente.");
             System.out.print("Nombre: ");
             nombre = teclado.nextLine();
@@ -37,21 +37,26 @@ public class HerramientaView {
         System.out.print("Tipo: ");
         String tipo = teclado.nextLine();
 
-        while(!tipo.matches("[a-zA-Z ]+")){
+        while (!tipo.matches("[a-zA-Z ]+")) {
             System.out.println("Tipo no valido, ingreselo nuevamente.");
             System.out.print("Tipo: ");
             tipo = teclado.nextLine();
         }
 
-        System.out.println("Estado:\n1)Disponible\t2)Ocupado ");
+        System.out.println("Estado:\n1)Disponible\t2)En uso ");
         String estado = teclado.nextLine();
 
-        while(!estado.equalsIgnoreCase("Disponible") && !estado.equalsIgnoreCase("Ocupado")) {
-                System.out.println("Estado invalido, ingreselo nuevamente.");
-                System.out.println("1)Disponible\t2)Ocupado ");
-                estado = teclado.nextLine();
+        while (!estado.matches("[1-2]")) {
+            System.out.println("Estado no valido, ingreselo nuevamente.");
+            System.out.println("Estado:\n1)Disponible\t2)En uso ");
+            estado = teclado.nextLine();
         }
 
+        if(estado.equals("1")){
+            estado = "Disponible";
+        } else if(estado.equals("2")){
+            estado = "En uso";
+        }
 
         Herramienta herramienta = new Herramienta();
         herramienta.setNombre(nombre);
