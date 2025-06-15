@@ -28,8 +28,8 @@ public class HerramientaView {
         System.out.print("Nombre: ");
         String nombre = teclado.nextLine();
 
-        while (!nombre.matches("[a-z-A-Z ]+")) {
-            System.out.println("Nombre no valido, ingreselo nuevamente.");
+        while (!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,25}")) {
+            System.out.print("Nombre no valido, Ingreselo nuevamente (Máximo 25 caracteres): ");
             System.out.print("Nombre: ");
             nombre = teclado.nextLine();
         }
@@ -37,8 +37,8 @@ public class HerramientaView {
         System.out.print("Tipo: ");
         String tipo = teclado.nextLine();
 
-        while (!tipo.matches("[a-zA-Z ]+")) {
-            System.out.println("Tipo no valido, ingreselo nuevamente.");
+        while (!tipo.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,25}")) {
+            System.out.print("Tipo no valido, Ingreselo nuevamente (Máximo 25 caracteres): ");
             System.out.print("Tipo: ");
             tipo = teclado.nextLine();
         }

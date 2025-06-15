@@ -29,8 +29,8 @@ public class MecanicoView{
         System.out.print("Nombre: ");
         String nombre = teclado.nextLine();
 
-        while(!nombre.matches("[a-zA-Z ]+")){
-            System.out.println("Nombre no valido, ingreselo nuevamente");
+        while(!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,25}")){
+            System.out.print("Nombre no valido, Ingreselo nuevamente (Máximo 25 caracteres): ");
             System.out.print("Nombre: ");
             nombre = teclado.nextLine();
         }
@@ -38,8 +38,8 @@ public class MecanicoView{
         System.out.print("Especialidad: ");
         String especialidad = teclado.nextLine();
 
-        while(!especialidad.matches("[a-zA-Z ]+")){
-            System.out.println("Especialidad no valida, ingresela nuevamente");
+        while(!especialidad.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,25}")){
+            System.out.print("Especialidad no valida, Ingresela nuevamente (Máximo 25 caracteres): ");
             System.out.print("Especialidad: ");
             especialidad = teclado.nextLine();
         }
