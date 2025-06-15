@@ -89,15 +89,10 @@ public class MecanicoView{
     public String leerOpcion() {
         String respuesta;
 
-        do {
-            respuesta = teclado.nextLine();
-
-            if (!respuesta.matches("\\d+")) {
+        while(!respuesta.matches("\\d+")){
                 System.out.println("Ingrese nuevamente el número");
-            }
-
-        } while (!respuesta.matches("\\d+"));
-
+                respuesta = teclado.nextLine();
+        } 
         return respuesta;
     }
 }
