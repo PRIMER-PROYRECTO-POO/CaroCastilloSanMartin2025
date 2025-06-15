@@ -31,12 +31,12 @@ public class ClienteView {
         System.out.print("Nombre: ");
         String nombre = teclado.nextLine();
 
-        while(!nombre.matches("[a-zA-Z ]+")){
-            System.out.print("Nombre no valido, ingreselo nuevamente: ");
+        while(!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,25}")){
+            System.out.print("Nombre no valido, Ingreselo nuevamente (Máximo 25 caracteres): ");
             nombre = teclado.nextLine();
         }
 
-        System.out.print("Rut: ");
+        System.out.print("Rut (sin puntos y con guion): ");
         String rut = teclado.nextLine();
 
         while(!rut.matches("^\\d{7,8}-[\\dkK]$")){
@@ -48,7 +48,7 @@ public class ClienteView {
         String telefono;
 
 
-            System.out.print("telefono: \n+569 ");
+            System.out.print("telefono: +569 ");
             telefono = teclado.nextLine();
 
             while(!telefono.matches("\\d{8}")) {
