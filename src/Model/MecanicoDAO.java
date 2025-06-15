@@ -12,6 +12,36 @@ public class MecanicoDAO {
             e.printStackTrace();
         }
     }
+
+    public Mecanico buscarMecanicoPorId(int id) {
+        Mecanico mecanico = null;
+
+        String sql = "SELECT * FROM mecanicos WHERE id_mecanico = ?";
+
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, id);
+
+            ResultSet respuesta = stmt.executeQuery();
+
+            if (respuesta.next()) {
+                mecanico = new Mecanico();
+                mecanico.setId_mecanico(respuesta.getInt("id_mecanico"));
+                mecanico.setNombre(respuesta.getString("nombre"));
+                mecanico.setEspecialidad(respuesta.getString("especialidad"));
+                mecanico.setAnio_experiencia(respuesta.getInt("anio_experiencia"));
+            }
+
+            respuesta.close();
+            stmt.close();
+
+        } catch (SQLException e) {
+            System.out.println("Error al buscar Mecanico por ID: " + e.getMessage());
+        }
+
+        return mecanico; // Si no encuentra nada, devuelve null
+    }
+
     public void crearMecanico(Mecanico mc){
         String sql = "INSERT INTO mecanicos (nombre,especialidad,anio_experiencia) values (?,?,?)";
         try(PreparedStatement stmt = connection.prepareStatement(sql)){

@@ -3,8 +3,6 @@ import Model.Auto;
 import Model.AutoDAO;
 import View.AutoView;
 
-import java.sql.Connection;
-
 public class AutoController {
     private AutoDAO dao;
     private AutoView view;
@@ -45,6 +43,7 @@ public class AutoController {
         do{
             view.mostrarMenu();
             opcion = view.leerOpcion();
+
             switch (opcion) {
                 case "1" -> view.mostrarAutos(dao.obtenerTodos());
                 case "2" -> dao.crearAuto(view.leerNuevoAuto());

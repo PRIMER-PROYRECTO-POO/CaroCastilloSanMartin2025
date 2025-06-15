@@ -12,6 +12,36 @@ public class ClienteDAO {
             e.printStackTrace();
         }
     }
+
+    public Cliente buscarClientePorId(int id) {
+        Cliente cliente = null;
+
+        String sql = "SELECT * FROM clientes WHERE id_clientes = ?";
+
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, id);
+
+            ResultSet respuesta = stmt.executeQuery();
+
+            if (respuesta.next()) {
+                cliente = new Cliente();
+                cliente.setId_clientes(respuesta.getInt("id_clientes"));
+                cliente.setNombre(respuesta.getString("nombre"));
+                cliente.setRut(respuesta.getString("rut"));
+                cliente.setTelefono(respuesta.getString("telefono"));
+            }
+
+            respuesta.close();
+            stmt.close();
+
+        } catch (SQLException e) {
+            System.out.println("Error al buscar auto por ID: " + e.getMessage());
+        }
+
+        return cliente; // Si no encuentra nada, devuelve null
+    }
+
     public void crearCliente(Cliente cl){
         String sql = "INSERT INTO clientes (nombre,rut,telefono) values (?,?,?)";
         try(PreparedStatement stmt = connection.prepareStatement(sql)){

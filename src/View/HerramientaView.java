@@ -1,4 +1,5 @@
 package View;
+import Model.Cliente;
 import Model.Herramienta;
 import java.util.*;
 
@@ -26,10 +27,31 @@ public class HerramientaView {
     public Herramienta leerNuevaHerramienta(){
         System.out.print("Nombre: ");
         String nombre = teclado.nextLine();
+
+        while(!nombre.matches("[a-z-A-Z ]+")){
+            System.out.println("Nombre no valido, ingreselo nuevamente.");
+            System.out.print("Nombre: ");
+            nombre = teclado.nextLine();
+        }
+
         System.out.print("Tipo: ");
         String tipo = teclado.nextLine();
-        System.out.print("Estado: ");
+
+        while(!tipo.matches("[a-zA-Z ]+")){
+            System.out.println("Tipo no valido, ingreselo nuevamente.");
+            System.out.print("Tipo: ");
+            tipo = teclado.nextLine();
+        }
+
+        System.out.println("Estado:\n1)Disponible\t2)Ocupado ");
         String estado = teclado.nextLine();
+
+        while(!estado.equalsIgnoreCase("Disponible") && !estado.equalsIgnoreCase("Ocupado")) {
+                System.out.println("Estado invalido, ingreselo nuevamente.");
+                System.out.println("1)Disponible\t2)Ocupado ");
+                estado = teclado.nextLine();
+        }
+
 
         Herramienta herramienta = new Herramienta();
         herramienta.setNombre(nombre);
@@ -39,20 +61,40 @@ public class HerramientaView {
         return herramienta;
     }
 
-    public Herramienta leerHerramientaActualizada(){
-        System.out.print("Ingrese el ID de la herramienta a actualizar: ");
-        int id = Integer.parseInt(teclado.nextLine());
-        Herramienta herramienta = leerNuevaHerramienta();
-        herramienta.setId_herramienta(id);
-        return herramienta;
+    public Herramienta leerHerramientaActualizado(Herramienta HerramientaExistente) {
+        System.out.println("Actualizando Herramienta con ID: " + HerramientaExistente.getId_herramienta());
+
+        Herramienta actualizado = leerNuevaHerramienta(); // se piden los nuevos datos
+        actualizado.setId_herramienta(HerramientaExistente.getId_herramienta()); // se conserva el ID original
+
+        return actualizado;
     }
 
-    public int leerIdEliminar(){
-        System.out.print("Ingrese ID de la herramienta a eliminar: ");
-        return Integer.parseInt(teclado.nextLine());
+    public int pedirIdHerramienta() {
+        System.out.print("Ingrese el ID de la Herramienta: ");
+        String idPal = teclado.nextLine();
+
+        while(!idPal.matches("\\d+")){
+            System.out.println("Id no valido.");
+            System.out.print("Ingrese el ID de la herramienta: ");
+            idPal = teclado.nextLine();
+        }
+
+        return Integer.parseInt(idPal);
     }
 
-    public int leerOpcion(){
-        return Integer.parseInt(teclado.nextLine());
+    public String leerOpcion() {
+        String respuesta;
+
+        do {
+            respuesta = teclado.nextLine();
+
+            if (!respuesta.matches("\\d+")) {
+                System.out.println("Ingrese nuevamente el número");
+            }
+
+        } while (!respuesta.matches("\\d+"));
+
+        return respuesta;
     }
 }

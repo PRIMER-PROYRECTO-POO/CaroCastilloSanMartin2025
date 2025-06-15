@@ -1,4 +1,5 @@
 package View;
+import Model.Auto;
 import Model.Cliente;
 
 
@@ -26,33 +27,36 @@ public class ClienteView {
     }
 
     public Cliente leerNuevoCliente(){
-        boolean valido = false;
-        String nombre = "";
 
-        while (!valido) {
-            System.out.print("Nombre: ");
+        System.out.print("Nombre: ");
+        String nombre = teclado.nextLine();
+
+        while(!nombre.matches("[a-zA-Z ]+")){
+            System.out.print("Nombre no valido, ingreselo nuevamente: ");
             nombre = teclado.nextLine();
-
-            if (nombre.matches(".*\\d.*")){
-                System.out.println("El nombre no debe contener números. Intente nuevamente.");
-            } else {
-                valido = true;
-            }
         }
 
         System.out.print("Rut: ");
         String rut = teclado.nextLine();
+
+        while(!rut.matches("^\\d{7,8}-[\\dkK]$")){
+            System.out.println("Rut invalido, ingreselo nuevamente (sin puntos y con guion)");
+            System.out.print("Rut: ");
+            rut = teclado.nextLine();
+        }
+
         String telefono;
 
-        do {
+
             System.out.print("telefono: \n+569 ");
             telefono = teclado.nextLine();
 
-            if (!telefono.matches("\\d{8}")) {
-                System.out.println("Número inválido. Debe contener exactamente 8 dígitos numéricos.");
-            }
+            while(!telefono.matches("\\d{8}")) {
 
-        } while (!telefono.matches("\\d{8}"));
+                System.out.println("Número inválido. Debe contener exactamente 8 dígitos numéricos.");
+                System.out.print("telefono: \n+569 ");
+                telefono = teclado.nextLine();
+            }
 
         Cliente cliente = new Cliente();
         cliente.setNombre(nombre);
@@ -62,20 +66,40 @@ public class ClienteView {
         return cliente;
     }
 
-    public Cliente leerClienteActualizado(){
-        System.out.print("Ingrese el ID del cliente a actualizar: ");
-        int id = Integer.parseInt(teclado.nextLine());
-        Cliente cliente = leerNuevoCliente();
-        cliente.setId_clientes(id);
-        return cliente;
+    public Cliente leerClienteActualizado(Cliente ClienteExistente) {
+        System.out.println("Actualizando Cliente con ID: " + ClienteExistente.getId_clientes());
+
+        Cliente actualizado = leerNuevoCliente(); // se piden los nuevos datos
+        actualizado.setId_clientes(ClienteExistente.getId_clientes()); // se conserva el ID original
+
+        return actualizado;
     }
 
-    public int leerIdEliminar(){
-        System.out.print("Ingrese el ID del cliente a eliminar: ");
-        return Integer.parseInt(teclado.nextLine());
+    public int pedirIdCliente() {
+        System.out.print("Ingrese el ID del Cliente: ");
+        String idPal = teclado.nextLine();
+
+        while(!idPal.matches("\\d+")){
+            System.out.println("Id no valido.");
+            System.out.print("Ingrese el ID del cliente: ");
+            idPal = teclado.nextLine();
+        }
+
+        return Integer.parseInt(idPal);
     }
 
-    public int leerOpcion(){
-        return Integer.parseInt(teclado.nextLine());
+    public String leerOpcion() {
+        String respuesta;
+
+        do {
+            respuesta = teclado.nextLine();
+
+            if (!respuesta.matches("\\d+")) {
+                System.out.println("Ingrese nuevamente el número");
+            }
+
+        } while (!respuesta.matches("\\d+"));
+
+        return respuesta;
     }
 }

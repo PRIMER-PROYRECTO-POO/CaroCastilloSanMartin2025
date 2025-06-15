@@ -34,7 +34,7 @@ public class AutoView {
             System.out.print("Marca: ");
             marca = teclado.nextLine();
 
-            while(!marca.matches("[a-zA-Z]+")){
+            while(!marca.matches("[a-zA-Z ]+")){
 
                 System.out.println("No valido, intentelo nuevamente.");
                 System.out.print("Marca: ");
@@ -57,7 +57,7 @@ public class AutoView {
 
         //VALIDACION DE AÑO
 
-        int anio = 0;
+        int anio;
         String anioComoString;
 
             System.out.print("Año de fundación: ");
@@ -123,7 +123,6 @@ public class AutoView {
         String respuesta;
 
         do {
-            System.out.print("Opción: ");
             respuesta = teclado.nextLine();
 
             if (!respuesta.matches("\\d+")) {

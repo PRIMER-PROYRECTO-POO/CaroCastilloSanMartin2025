@@ -1,4 +1,5 @@
 package View;
+import Model.Herramienta;
 import Model.Mecanico;
 import java.util.*;
 
@@ -10,7 +11,7 @@ public class MecanicoView{
         System.out.println("1.- Listar Mecanicos");
         System.out.println("2.- Crear Mecanicos");
         System.out.println("3.- Editar Mecanicos");
-        System.out.println("4.- Elimianr Mecanicos");
+        System.out.println("4.- Eliminar Mecanicos");
         System.out.println("5.- Salir");
         System.out.print("Ingrese una opción: ");
     }
@@ -24,45 +25,36 @@ public class MecanicoView{
     }
 
     public Mecanico leerNuevoMecanico(){
-        boolean valido = false;
-        String nombre = "";
 
-        while (!valido) {
+        System.out.print("Nombre: ");
+        String nombre = teclado.nextLine();
+
+        while(!nombre.matches("[a-zA-Z ]+")){
+            System.out.println("Nombre no valido, ingreselo nuevamente");
             System.out.print("Nombre: ");
             nombre = teclado.nextLine();
-
-            if (nombre.matches(".*\\d.*")){
-                System.out.println("El nombre no debe contener números. Intente nuevamente.");
-            } else {
-                valido = true;
-            }
         }
 
         System.out.print("Especialidad: ");
         String especialidad = teclado.nextLine();
 
-        int anios = 0;
-        boolean validos = false;
-
-        while (!validos) {
-            System.out.print("Años de experiencia: ");
-            String entrada = teclado.nextLine();
-
-            try {
-                anios = Integer.parseInt(entrada);
-                if (entrada.length() <= 2) {
-                    if(anios > 0) {
-                        validos = true;
-                    }else {
-                        System.out.println("debe ingresar años de experiencia validos.");
-                    }
-                } else {
-                    System.out.println("debe ingresar años de experiencia validos.");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Entrada inválida. Debes ingresar un número entero.");
-            }
+        while(!especialidad.matches("[a-zA-Z ]+")){
+            System.out.println("Especialidad no valida, ingresela nuevamente");
+            System.out.print("Especialidad: ");
+            especialidad = teclado.nextLine();
         }
+
+        System.out.print("Años de experiencia: ");
+        String aniosPal = teclado.nextLine();
+        int anios;
+
+        while (!aniosPal.matches("^\\d{1,2}$")){
+            System.out.println("Años no validos, ingreselos nuevamente.");
+            System.out.print("Años de experiencia: ");
+            aniosPal = teclado.nextLine();
+        }
+
+        anios = Integer.parseInt(aniosPal);
 
         Mecanico mecanico = new Mecanico();
         mecanico.setNombre(nombre);
@@ -72,20 +64,40 @@ public class MecanicoView{
         return mecanico;
     }
 
-    public Mecanico leerMecanicoActualizado(){
-        System.out.print("Ingrese el ID del mecanico a actualizar: ");
-        int id = Integer.parseInt(teclado.nextLine());
-        Mecanico mecanico = leerNuevoMecanico();
-        mecanico.setId_mecanico(id);
-        return mecanico;
+    public Mecanico leerMecanicoActualizado(Mecanico MecanicoExistente) {
+        System.out.println("Actualizando Mecanico con ID: " + MecanicoExistente.getId_mecanico());
+
+        Mecanico actualizado = leerNuevoMecanico(); // se piden los nuevos datos
+        actualizado.setId_mecanico(MecanicoExistente.getId_mecanico()); // se conserva el ID original
+
+        return actualizado;
     }
 
-    public int leerIdEliminar() {
-        System.out.print("Ingrese el ID del mecanico a eliminar: ");
-        return Integer.parseInt(teclado.nextLine());
+    public int pedirIdMecanico() {
+        System.out.print("Ingrese el ID del mecanico: ");
+        String idPal = teclado.nextLine();
+
+        while(!idPal.matches("\\d+")){
+            System.out.println("Id no valido.");
+            System.out.print("Ingrese el ID del mecanico: ");
+            idPal = teclado.nextLine();
+        }
+
+        return Integer.parseInt(idPal);
     }
 
-    public int leerOpcion(){
-        return Integer.parseInt(teclado.nextLine());
+    public String leerOpcion() {
+        String respuesta;
+
+        do {
+            respuesta = teclado.nextLine();
+
+            if (!respuesta.matches("\\d+")) {
+                System.out.println("Ingrese nuevamente el número");
+            }
+
+        } while (!respuesta.matches("\\d+"));
+
+        return respuesta;
     }
 }

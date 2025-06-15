@@ -12,6 +12,35 @@ public class HerramientaDAO {
             e.printStackTrace();
         }
     }
+    public Herramienta buscarHerramientaPorId(int id) {
+        Herramienta herramienta = null;
+
+        String sql = "SELECT * FROM herramientas WHERE id_herramienta = ?";
+
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, id);
+
+            ResultSet respuesta = stmt.executeQuery();
+
+            if (respuesta.next()) {
+                herramienta = new Herramienta();
+                herramienta.setId_herramienta(respuesta.getInt("id_herramienta"));
+                herramienta.setNombre(respuesta.getString("nombre"));
+                herramienta.setTipo(respuesta.getString("tipo"));
+                herramienta.setEstado(respuesta.getString("estado"));
+            }
+
+            respuesta.close();
+            stmt.close();
+
+        } catch (SQLException e) {
+            System.out.println("Error al buscar herramienta por ID: " + e.getMessage());
+        }
+
+        return herramienta; // Si no encuentra nada, devuelve null
+    }
+
     public void crearHerramienta(Herramienta er){
         String sql = "INSERT INTO herramientas (nombre, tipo, estado) VALUES (?, ?, ?)";
         try(PreparedStatement stmt = connection.prepareStatement(sql)){
